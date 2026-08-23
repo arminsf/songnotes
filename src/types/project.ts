@@ -6,10 +6,18 @@ export interface Pattern {
     chord?: string,
     notes: string,
 }
+
 export interface Measure {
-    special?: string, // used later for line breaks, bpm changes, etc
-    pattern: number | null
+    type: "measure",
+    pattern: number | null,
 }
+
+export interface Section {
+    type: "section",
+    name: string
+}
+
+export type TimelineObject = Measure | Section;
 
 export interface Project {
     name: string,
@@ -19,5 +27,5 @@ export interface Project {
     timeSignDen: number,
     phraseLength: number,
     patterns: Pattern[],
-    timeline: Measure[]
+    timeline: TimelineObject[]
 }

@@ -4,7 +4,9 @@ import { useProjectStore } from "../store/project-store";
 import { useEditorStore } from "../store/editor-store";
 
 export function MeasureCard({index}: {index: number}) {
-    const timeline: Measure[] = useProjectStore((state) => state.project.timeline);
+    const timeline = useProjectStore((state) => state.project.timeline);
+    if (timeline[index].type !== "measure") return;
+
     const measure: Measure = timeline[index];
     const pattern: Pattern | undefined = useProjectStore((state) => state.project.patterns.find((p) => p.id === measure.pattern));
 

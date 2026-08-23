@@ -27,18 +27,20 @@ const initialProject: Project = {
             },
         ],
         timeline: [
-            {pattern: 0},
-            {pattern: 0},
-            {pattern: 0},
-            {pattern: 0},
-            {pattern: 1},
-            {pattern: 1},
-            {pattern: 1},
-            {pattern: 1},
-            {pattern: null},
-            {pattern: null},
-            {pattern: null},
-            {pattern: null},
+            {type: "section", name: "verse"},
+            {type: "measure", pattern: 0},
+            {type: "measure", pattern: 0},
+            {type: "measure", pattern: 0},
+            {type: "measure", pattern: 0},
+            {type: "section", name: "chorus"},
+            {type: "measure", pattern: 1},
+            {type: "measure", pattern: 1},
+            {type: "measure", pattern: 1},
+            {type: "measure", pattern: 1},
+            {type: "measure", pattern: null},
+            {type: "measure", pattern: null},
+            {type: "measure", pattern: null},
+            {type: "measure", pattern: null},
         ],
 }
 
@@ -81,7 +83,7 @@ export const useProjectStore = create<ProjectStore>((set) => ({
                         }
                     ],
 
-                    timeline: state.project.timeline.map((m, i) => (i === clickedMeasureIndex ? {pattern: newPatternId} : m)),
+                    timeline: state.project.timeline.map((m, i) => (i === clickedMeasureIndex ? {...m, pattern: newPatternId} : m)),
                 }
             }
         });
@@ -92,7 +94,7 @@ export const useProjectStore = create<ProjectStore>((set) => ({
     newMeasure: () => set((state) => ({
         project: {
             ...state.project,
-            timeline: [...state.project.timeline, {pattern: null}],
+            timeline: [...state.project.timeline, {type: "measure", pattern: null}],
         }
     })),
 
