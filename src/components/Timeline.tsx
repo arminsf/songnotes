@@ -1,41 +1,46 @@
 import { useProjectStore } from "../store/project-store";
-import { MeasureGrid } from "./MeasureGrid";
+import { InlineBar } from "./InlineBar";
+import { MeasureRow } from "./MeasureRow";
 import { SectionBar } from "./SectionBar";
 
 export function Timeline() {
-    const width = useProjectStore((state) => state.project.phraseLength)
-    const newMeasure = useProjectStore((state) => state.newMeasure)
-    const timeline = useProjectStore((state) => state.project.timeline)
+    const width = useProjectStore((state) => state.project.phraseLength);
+    const newMeasure = useProjectStore((state) => state.newMeasure);
+    const timeline = useProjectStore((state) => state.project.timeline);
 
     function* constructTimeline() {
-        let measuresFirst: number | undefined = undefined;
+        let firstMeasure: number | undefined = undefined;
         let dragging = false;
 
+        yield <InlineBar timelinePosition={0} />;
         for (const [i, timelineObject] of timeline.entries()) {
+            if (dragging && (timelineObject.type !== "measure" || (firstMeasure !== undefined && i === firstMeasure + width))) {
+                yield <MeasureRow first={firstMeasure} last={i} width={width} />;
+                yield <InlineBar timelinePosition={i} />;
+                dragging = false;
+            }
+
             if (timelineObject.type === "measure") {
                 if (!dragging) {
-                    measuresFirst = i;
+                    firstMeasure = i;
                     dragging = true;
-                }
-            } else {
-                if (dragging) {
-                    yield <MeasureGrid first={measuresFirst} last={i} width={width} />;
-                    dragging = false;
                 }
             }
 
             if (timelineObject.type === "section") {
-                yield <SectionBar name={timelineObject.name} />;
+                yield <SectionBar index={i} />;
+                yield <InlineBar timelinePosition={i+1} />;
             }
         }
 
         if (dragging) {
-            yield <MeasureGrid first={measuresFirst} width={width} />;
+            yield <MeasureRow first={firstMeasure} width={width} />;
+            yield <InlineBar timelinePosition={timeline.length} />;
         }
     }
 
     return (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3">
             {[...constructTimeline()]}
 
             <div 

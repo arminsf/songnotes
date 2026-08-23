@@ -9,7 +9,7 @@ import { Timeline } from "./components/Timeline";
 
 function App() {
   return (
-    <div className="w-screen h-screen p-20">
+    <div className="w-screen h-screen px-20 py-10">
       <Ribbon />
       <Group className="">
         <Panel className="p-3" defaultSize={400} minSize={400}>

@@ -21,7 +21,7 @@ export function MeasureCard({index}: {index: number}) {
 
     return (
         <div 
-            className={"flex border-2 w-full h-14 text-center" + (pattern ? "" : " border-dotted")}
+            className={"select-none flex border-2 w-full h-14 text-center" + (pattern ? "" : " border-dotted")}
         >
             {pattern ? 
                 (<>
