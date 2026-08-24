@@ -1,14 +1,12 @@
-import type { Measure, Pattern } from "../types/project";
-
 import { useProjectStore } from "../store/project-store";
 import { useEditorStore } from "../store/editor-store";
 
 export function MeasureCard({index}: {index: number}) {
     const timeline = useProjectStore((state) => state.project.timeline);
-    if (timeline[index].type !== "measure") return;
 
-    const measure: Measure = timeline[index];
-    const pattern: Pattern | undefined = useProjectStore((state) => state.project.patterns.find((p) => p.id === measure.pattern));
+    const timelineObject = timeline[index];
+    const patternId = timelineObject.type === "measure" ? timelineObject.pattern : null;
+    const pattern = useProjectStore((state) => state.project.patterns.find((p) => p.id === patternId));
 
     const newPattern: (clickedMeasureIndex: number | null) => number | null = useProjectStore((state) => state.newPattern);
     const setMeasurePattern: (measureIndex: number, patternId: number | null) => void = useProjectStore((state) => state.setMeasurePattern);
@@ -17,13 +15,15 @@ export function MeasureCard({index}: {index: number}) {
     const selectedPatternId: number | null = useEditorStore((state) => state.selectedPatternId);
     const hoveredPatternId = useEditorStore((state) => state.hoveredPatternId);
 
-    const selectedPattern: Pattern | undefined = useProjectStore((state) => state.project.patterns.find((p) => p.id === selectedPatternId));
-
+    const selectedPattern = useProjectStore((state) => state.project.patterns.find((p) => p.id === selectedPatternId));
+    
+    if (timeline[index].type !== "measure") return;
 
     return (
         <div 
-            className={"select-none flex border-2 w-full h-14 text-center" + (pattern ? "" : " border-dotted") + (pattern && hoveredPatternId === measure.pattern ? " bg-stone-100" : "")}
+            className={"relative select-none flex border-2 w-full h-14 text-center" + (pattern ? "" : " border-dotted") + (pattern && hoveredPatternId === patternId ? " bg-stone-100" : "")}
         >
+            <span className="absolute left-1 top-0.5 text-stone-600 text-xs">{index}</span>
             {pattern ? 
                 (<>
                     <div 

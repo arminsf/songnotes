@@ -12,11 +12,13 @@ export function Timeline() {
         let firstMeasure: number | undefined = undefined;
         let dragging = false;
 
-        yield <InlineBar timelinePosition={0} />;
+        // todo: keys generated on the fly, instead of being kept as data. not good. 
+        // it's fine for MeasureRow and InlineBar, but section needs an id
+        yield <InlineBar key={`inlinebar-${0}`} timelinePosition={0} />;
         for (const [i, timelineObject] of timeline.entries()) {
             if (dragging && (timelineObject.type !== "measure" || (firstMeasure !== undefined && i === firstMeasure + width))) {
-                yield <MeasureRow first={firstMeasure} last={i} width={width} />;
-                yield <InlineBar timelinePosition={i} />;
+                yield <MeasureRow key={`measurerow-${firstMeasure}`} first={firstMeasure} last={i} width={width} />;
+                yield <InlineBar key={`inlinebar-${i}`} timelinePosition={i} />;
                 dragging = false;
             }
 
@@ -28,14 +30,14 @@ export function Timeline() {
             }
 
             if (timelineObject.type === "section") {
-                yield <SectionBar index={i} />;
-                yield <InlineBar timelinePosition={i+1} />;
+                yield <SectionBar key={`section-${i}`} index={i} />;
+                yield <InlineBar key={`inlinebar-${i+1}`} timelinePosition={i+1} />;
             }
         }
 
         if (dragging) {
-            yield <MeasureRow first={firstMeasure} width={width} />;
-            yield <InlineBar timelinePosition={timeline.length} />;
+            yield <MeasureRow key={`measurerow-${firstMeasure}`} first={firstMeasure} width={width} />;
+            yield <InlineBar key={`inlinebar-${timeline.length}`} timelinePosition={timeline.length} />;
         }
     }
 

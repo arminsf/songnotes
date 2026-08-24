@@ -7,7 +7,7 @@ export function MeasureRow({first = undefined, last = undefined, width = 4}: {fi
     const timeline = useProjectStore((state) => state.project.timeline);
 
     return (
-        <div className="grid gap-3"
+        <div className="overflow-visible grid gap-3"
             style={{ gridTemplateColumns: `repeat(${width}, minmax(0, 1fr))` }}>
             {timeline.slice(first, last).map((m, i) => m.type === "measure" ? (<MeasureCard key={first?first+i:i} index={first?first+i:i} />) : null)}
         </div>

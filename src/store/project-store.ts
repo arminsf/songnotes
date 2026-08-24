@@ -12,17 +12,9 @@ const initialProject: Project = {
         patterns: [
             {
                 id: 0,
-                name: "Verse Bar",
-                label: "V",
+                name: "Pattern 0",
+                label: "P",
                 color: "#FF0000",
-                notes: "",
-            },
-
-            {
-                id: 1,
-                name: "Chorus Bar",
-                label: "C",
-                color: "#0000BB",
                 notes: "",
             },
         ],
@@ -32,20 +24,15 @@ const initialProject: Project = {
             {type: "measure", pattern: 0},
             {type: "measure", pattern: 0},
             {type: "measure", pattern: 0},
-            {type: "section", name: "chorus"},
-            {type: "measure", pattern: 1},
-            {type: "measure", pattern: 1},
-            {type: "measure", pattern: 1},
-            {type: "measure", pattern: 1},
-            {type: "measure", pattern: null},
-            {type: "measure", pattern: null},
-            {type: "measure", pattern: null},
-            {type: "measure", pattern: null},
         ],
 }
 
 interface ProjectStore {
     project: Project,
+    resetProject: () => void,
+    loadProject: (project: Project) => void,
+    editProject: (patch: Partial<Omit<Project, 'patterns' | 'timeline'>>) => void,
+
     editPattern: (patternId: number, patch: Partial<Pattern>) => void,
     removeFromTimeline: (index: number) => void,
     newPattern: (clickedMeasureIndex: number | null) => number | null,
@@ -58,21 +45,32 @@ interface ProjectStore {
 export const useProjectStore = create<ProjectStore>((set) => ({
     project: initialProject,
 
-    editPattern: (patternId: number, patch: Partial<Pattern>) => set((state) => ({
+    resetProject: () => set({project: initialProject}),
+
+    loadProject: (project) => set({project: project}),
+
+    editProject: (patch) => set((state) => ({
+        project: {
+            ...state.project,
+            ...patch,
+        }
+    })),
+
+    editPattern: (patternId, patch) => set((state) => ({
         project: {
             ...state.project,
             patterns: state.project.patterns.map((p) => p.id === patternId ? {...p, ...patch} : p),
         }
     })),
 
-    removeFromTimeline: (index: number) => set((state) => ({
+    removeFromTimeline: (index) => set((state) => ({
         project: {
             ...state.project,
             timeline: state.project.timeline.filter((_, i) => i !== index),
         }
     })),
 
-    newPattern: (clickedMeasureIndex: number | null) => {
+    newPattern: (clickedMeasureIndex) => {
         // make new pattern
         // set clicked measure's pattern to new pattern
         let r : number | null = null;
@@ -108,21 +106,21 @@ export const useProjectStore = create<ProjectStore>((set) => ({
         }
     })),
 
-    setMeasurePattern: (measureIndex: number, patternId: number | null) => set((state) => ({
+    setMeasurePattern: (measureIndex, patternId) => set((state) => ({
         project: {
             ...state.project,
             timeline: state.project.timeline.map((m, i) => (i === measureIndex ? {...m, pattern: patternId} : m)),
         }
     })),
 
-    newSection: (at: number) => set((state) => ({
+    newSection: (at) => set((state) => ({
         project: {
             ...state.project,
             timeline: [...state.project.timeline.slice(undefined, at), {type: "section", name: "section"}, ...state.project.timeline.slice(at, undefined)],
         }
     })),
 
-    setSectionName: (sectionIndex: number, name: string) => set((state) => ({
+    setSectionName: (sectionIndex, name) => set((state) => ({
         project: {
             ...state.project,
             timeline: state.project.timeline.map((s, i) => (i === sectionIndex ? {...s, name: name} : s)),
