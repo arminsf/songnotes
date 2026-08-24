@@ -1,15 +1,20 @@
 import { useEditorStore } from "../store/editor-store";
 import { useProjectStore } from "../store/project-store"
+import { PatternList } from "./PatternList";
 
 export function PatternEditor() {
     const selectedPatternIndex = useEditorStore((state) => state.selectedPatternIndex);
+    const selectPattern = useEditorStore((state) => state.selectPattern)
 
     const pattern = useProjectStore((state) => state.project.patterns.find((p) => p.id === selectedPatternIndex));
     const editPattern = useProjectStore((state) => state.editPattern);
 
     return pattern ? (
-        <div className="flex flex-col gap-1 w-full h-full p-3">
-            {}
+        <div className="relative flex flex-col gap-1 w-full h-full p-3">
+            <div 
+                className="select-none absolute size-6 hover:bg-stone-200 top-4 right-4 text-center place-content-center"
+                onClick={() => selectPattern(null)}
+            >×</div>
             <input 
                 className="w-60 text-xl p-1" 
                 type="text"
@@ -29,8 +34,8 @@ export function PatternEditor() {
             />
         </div>
     ) : (
-        <div className="w-full h-full place-content-center text-center text-2xl">
-            Pattern explorer goes here
+        <div className="w-full h-full place-content-center text-center">
+            <PatternList />
         </div>
     )
 }
