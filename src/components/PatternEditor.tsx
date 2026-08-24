@@ -3,10 +3,10 @@ import { useProjectStore } from "../store/project-store"
 import { PatternList } from "./PatternList";
 
 export function PatternEditor() {
-    const selectedPatternIndex = useEditorStore((state) => state.selectedPatternIndex);
+    const selectedPatternId = useEditorStore((state) => state.selectedPatternId);
     const selectPattern = useEditorStore((state) => state.selectPattern)
 
-    const pattern = useProjectStore((state) => state.project.patterns.find((p) => p.id === selectedPatternIndex));
+    const pattern = useProjectStore((state) => state.project.patterns.find((p) => p.id === selectedPatternId));
     const editPattern = useProjectStore((state) => state.editPattern);
 
     return pattern ? (

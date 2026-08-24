@@ -14,14 +14,15 @@ export function MeasureCard({index}: {index: number}) {
     const setMeasurePattern: (measureIndex: number, patternId: number | null) => void = useProjectStore((state) => state.setMeasurePattern);
 
     const selectPattern: (pattern: number | null) => void = useEditorStore((state) => state.selectPattern);
-    const selectedPatternIndex: number | null = useEditorStore((state) => state.selectedPatternIndex);
+    const selectedPatternId: number | null = useEditorStore((state) => state.selectedPatternId);
+    const hoveredPatternId = useEditorStore((state) => state.hoveredPatternId);
 
-    const selectedPattern: Pattern | undefined = useProjectStore((state) => state.project.patterns.find((p) => p.id === selectedPatternIndex));
+    const selectedPattern: Pattern | undefined = useProjectStore((state) => state.project.patterns.find((p) => p.id === selectedPatternId));
 
 
     return (
         <div 
-            className={"select-none flex border-2 w-full h-14 text-center" + (pattern ? "" : " border-dotted")}
+            className={"select-none flex border-2 w-full h-14 text-center" + (pattern ? "" : " border-dotted") + (pattern && hoveredPatternId === measure.pattern ? " bg-stone-100" : "")}
         >
             {pattern ? 
                 (<>
@@ -39,7 +40,7 @@ export function MeasureCard({index}: {index: number}) {
                 (<>
                     <div 
                         className="text-transparent hover:text-black flex-1 hover:bg-stone-100 place-content-center"
-                        onClick={() => {if (selectedPatternIndex !== null) setMeasurePattern(index, selectedPatternIndex)}}
+                        onClick={() => {if (selectedPatternId !== null) setMeasurePattern(index, selectedPatternId)}}
                     > 
                         {selectedPattern?.label}
                     </div>

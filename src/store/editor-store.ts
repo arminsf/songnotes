@@ -1,13 +1,17 @@
 import { create } from "zustand";
 
 interface EditorStore {
-    selectedPatternIndex: number | null,
+    selectedPatternId: number | null,
+    hoveredPatternId: number | null,
 
     selectPattern: (pattern: number | null) => void,
+    hoverPattern: (pattern: number | null) => void,
 }
 
 export const useEditorStore = create<EditorStore>((set) => ({
-    selectedPatternIndex: null,
+    selectedPatternId: null,
+    hoveredPatternId: null,
     
-    selectPattern: (pattern: number | null) => set({selectedPatternIndex: pattern})
+    selectPattern: (pattern: number | null) => set({selectedPatternId: pattern}),
+    hoverPattern: (pattern: number | null) => set({hoveredPatternId: pattern}),
 }))

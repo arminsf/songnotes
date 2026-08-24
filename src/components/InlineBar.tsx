@@ -5,7 +5,7 @@ export function InlineBar({timelinePosition}: {timelinePosition: number}) {
     
     return (
         <div 
-            className="relative w-full h-0 py-3 -my-3 opacity-0 hover:opacity-40 flex"
+            className="z-0 relative w-full h-0 py-3 -my-3 opacity-0 hover:opacity-40 flex"
             onClick={() => newSection(timelinePosition)}    
         >
             <div className="absolute w-full h-px border"></div>

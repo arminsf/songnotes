@@ -4,11 +4,14 @@ import { useProjectStore } from "../store/project-store";
 export function PatternCard({ id }: { id: number }) {
     const pattern = useProjectStore((state) => state.project.patterns.find((p) => p.id === id));
     const selectPattern = useEditorStore((state) => state.selectPattern);
+    const hoverPattern = useEditorStore((state) => state.hoverPattern);
 
     return (pattern ?
         <div 
             className="border p-1 px-3 hover:bg-stone-100"
             onClick={() => selectPattern(id)}
+            onMouseEnter={() => hoverPattern(id)}
+            onMouseLeave={() => hoverPattern(null)}
         >
             <div className="flex flex-row gap-3">
             <div className="text-lg flex-1">{pattern.name}</div>
