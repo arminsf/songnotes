@@ -39,9 +39,9 @@ class Playback {
     }
 
     closeAudio() {
+        URL.revokeObjectURL(this.audioEl.src);
         this.audioEl.src = "";
         this._state = {...this._state, fileOpen: false};
-        URL.revokeObjectURL(this.audioEl.src);
         this.emit();
     }
 
