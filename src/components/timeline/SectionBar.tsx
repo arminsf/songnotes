@@ -8,7 +8,7 @@ export function SectionBar({index}: {index: number}) {
     if (section.type !== "section") return;
 
     return (
-        <div className="z-10 sticky -top-3 flex flex-row w-full bg-white border-b-2">
+        <div className="z-30 sticky -top-3 flex flex-row w-full bg-white border-b-2">
         <input
             className="w-20 flex-1"
             type="text"

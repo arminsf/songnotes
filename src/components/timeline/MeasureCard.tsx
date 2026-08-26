@@ -28,7 +28,7 @@ export function MeasureCard({index}: {index: number}) {
 
     const progressbarRef = useRef<HTMLDivElement>(null);
 
-    const {getCurrentTime} = usePlayback();
+    const {getCurrentTime, seek, play} = usePlayback();
     
     useEffect(() => {
         let raf: number;
@@ -45,9 +45,12 @@ export function MeasureCard({index}: {index: number}) {
     if (project.timeline[index].type !== "measure") return;
     
     return (
-        <div className={"flex flex-col "}>
+        <div 
+            className={"flex flex-col "}
+            onClick={() => seek(beginS)}
+        >
             <div 
-                className={"z-20 relative select-none flex w-full h-14 text-center border-2" + (pattern ? "" : " border-dotted") + (pattern && hoveredPatternId === patternId ? " bg-stone-100" : "")}
+                className={"relative select-none flex w-full h-14 text-center border-2" + (pattern ? "" : " border-dotted") + (pattern && hoveredPatternId === patternId ? " bg-stone-100" : "")}
             >
                 <span className="z-10 absolute left-1 top-0.5 text-stone-600 text-xs">{rank !== null ? rank + 1 : "???"}</span>
                 {pattern ? 
@@ -57,7 +60,7 @@ export function MeasureCard({index}: {index: number}) {
                             onClick={() => {return pattern ? selectPattern(pattern.id) : null;}}
                         >{pattern.label}</div>
                         <div 
-                            className="hover:bg-stone-100 w-6 flex-initial border-l-2 border-dotted place-content-center"
+                            className="hover:bg-stone-100 w-4 flex-initial border-l-2 border-dotted place-content-center"
                             onClick={() => setMeasurePattern(index, null)}
                         >-</div>
                     </>)
@@ -71,15 +74,15 @@ export function MeasureCard({index}: {index: number}) {
                             {selectedPattern?.label}
                         </div>
                         <div 
-                            className="hover:bg-stone-100 w-6 flex-initial border-l-2 border-dotted place-content-center"
+                            className="hover:bg-stone-100 w-4 flex-initial border-l-2 border-dotted place-content-center"
                             onClick={() => selectPattern(newPattern(index))}
                         >+</div>
                     </>)
                 }
                 
             </div>
-            <div className={"z-20 h-2 -mb-2 -translate-y-2 " + (pattern ? "" : " border-dotted")}>
-                <div className="bg-stone-400 h-full w-1/4" ref={progressbarRef}>
+            <div className={"h-1 -mb-2 -translate-y-1" + (pattern ? "" : " border-dotted")}>
+                <div className="bg-black h-full w-1/4" ref={progressbarRef}>
 
                 </div>
             </div>

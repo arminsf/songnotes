@@ -9,20 +9,12 @@ const initialProject: Project = {
         timeSignNom: 4,
         timeSignDen: 4,
         phraseLength: 4,
-        patterns: [
-            {
-                id: 0,
-                name: "Pattern 0",
-                label: "P",
-                color: "#FF0000",
-                notes: "",
-            },
-        ],
+        patterns: [],
         timeline: [
-            {type: "measure", pattern: 0},
-            {type: "measure", pattern: 0},
-            {type: "measure", pattern: 0},
-            {type: "measure", pattern: 0},
+            {type: "measure", pattern: null},
+            {type: "measure", pattern: null},
+            {type: "measure", pattern: null},
+            {type: "measure", pattern: null},
         ],
 }
 
@@ -50,8 +42,8 @@ export const useProjectStore = create<ProjectStore>((set) => ({
     loadProject: (project) => set({project: project}),
 
     editProject: (patch) => set((state) => {
-        patch.bpm = Math.max(patch.bpm || 120, 10);
-        patch.bpm = Math.min(patch.bpm || 120, 522);
+        patch.bpm = Math.max(patch.bpm || 1, 1);
+        patch.bpm = Math.min(patch.bpm || 522, 522);
 
         return {
             project: {

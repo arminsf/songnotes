@@ -2,6 +2,7 @@ import { downloadProject } from "../../file/io";
 import { useEditorStore } from "../../store/editor-store";
 import { useProjectStore } from "../../store/project-store"
 import { RibbonDJ } from "./RibbonDJ";
+import { Tapper } from "./Tapper";
 
 export function Ribbon() {
     const project = useProjectStore((state) => state.project);
@@ -31,15 +32,18 @@ export function Ribbon() {
                 </div>
             </div>
 
-            <div className="font-mono p-3 flex flex-row items-start gap-2">
-                <p>BPM:</p>
-                <input 
-                    className="w-13" 
-                    type="number"
-                    value={project.bpm}
-                    onChange={(e) => editProject({bpm: Number(e.target.value)})}
-                    onWheel={(e) => {e.preventDefault(); editProject({bpm: project.bpm + (e.deltaY < 0 ? 1 : -1)})}}
-                />
+            <div className="flex flex-col items-center">
+                <div className="font-mono p-2 flex flex-row items-start gap-2">
+                    <p>BPM:</p>
+                    <input 
+                        className="w-13 border border-stone-300" 
+                        type="number"
+                        value={project.bpm}
+                        onChange={(e) => editProject({bpm: Number(e.target.value)})}
+                        onWheel={(e) => {e.preventDefault(); editProject({bpm: project.bpm + (e.deltaY < 0 ? 1 : -1)})}}
+                    />
+                </div>
+                <Tapper />
             </div>
             <RibbonDJ />
         </div>
