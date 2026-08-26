@@ -1,7 +1,10 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePlayback } from "../../playback/usePlayback";
 
 export function SeekBar() {
+    const [dragging, setDragging] = useState(false);
+
+    const hitboxRef = useRef<HTMLDivElement>(null);
     const barRef = useRef<HTMLDivElement>(null);
     const fullbarRef = useRef<HTMLDivElement>(null);
 
@@ -22,8 +25,22 @@ export function SeekBar() {
     return (
     <div 
         className="flex-1 flex py-2 -my-2"
-        onMouseDown={(e) => {
+        ref={hitboxRef}
+
+        onPointerDown={(e) => {
+            setDragging(true);
             if (fullbarRef.current) {
+                const t = (e.pageX - fullbarRef.current.getBoundingClientRect().left) / fullbarRef.current.clientWidth;
+                seek(t * getDuration());
+            }
+            if (hitboxRef.current) hitboxRef.current.setPointerCapture(e.pointerId);
+        }}
+        onPointerUp={(e) => {
+            setDragging(false);
+            if (hitboxRef.current) hitboxRef.current.releasePointerCapture(e.pointerId);
+        }}
+        onPointerMove={(e) => {
+            if (dragging && fullbarRef.current) {
                 const t = (e.pageX - fullbarRef.current.getBoundingClientRect().left) / fullbarRef.current.clientWidth;
                 seek(t * getDuration());
             }

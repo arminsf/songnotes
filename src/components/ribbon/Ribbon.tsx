@@ -15,9 +15,9 @@ export function Ribbon() {
         <div className="flex flex-row gap-3 border-b-2 border-stone-400">
             <div className="flex-init flex flex-col items-start p-3">
                 <h1 
-                    className="text-2xl size-init font-bold hover:underline cursor-pointer"
+                    className="text-2xl h-8 size-init font-bold hover:underline cursor-pointer"
                     onClick={() => setProjectSettingsOpen(true)}
-                >{project.name}</h1>
+                >{" " + project.name}</h1>
 
                 <div className="flex flex-row gap-5">
                     <div
@@ -40,7 +40,7 @@ export function Ribbon() {
                         type="number"
                         value={project.bpm}
                         onChange={(e) => editProject({bpm: Number(e.target.value)})}
-                        onWheel={(e) => {e.preventDefault(); editProject({bpm: project.bpm + (e.deltaY < 0 ? 1 : -1)})}}
+                        onWheel={(e) => {e.preventDefault(); editProject({bpm: project.bpm + (e.deltaY > 0 ? 1 : -1)})}}
                     />
                 </div>
                 <Tapper />

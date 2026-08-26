@@ -24,7 +24,7 @@ export function ProjectEditor() {
                 onBlur={() => {editProject({name: validateProjectName(project.name)});}}
             />
             
-            <p>Todo: Tempo, time signature, key, phrase length settings.</p>
+            <p>Todo: Time signature, key, phrase length settings.</p>
         </div>
     );
 

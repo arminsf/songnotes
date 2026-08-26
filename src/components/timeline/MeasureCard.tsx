@@ -28,7 +28,7 @@ export function MeasureCard({index}: {index: number}) {
 
     const progressbarRef = useRef<HTMLDivElement>(null);
 
-    const {getCurrentTime, seek, play} = usePlayback();
+    const {getCurrentTime, seek} = usePlayback();
     
     useEffect(() => {
         let raf: number;
