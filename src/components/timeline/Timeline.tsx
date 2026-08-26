@@ -1,4 +1,4 @@
-import { useProjectStore } from "../store/project-store";
+import { useProjectStore } from "../../store/project-store";
 import { InlineBar } from "./InlineBar";
 import { MeasureRow } from "./MeasureRow";
 import { SectionBar } from "./SectionBar";

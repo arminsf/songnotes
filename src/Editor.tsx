@@ -1,8 +1,8 @@
 
 import { Group, Panel, Separator } from "react-resizable-panels";
 
-import { Ribbon } from "./components/Ribbon";
-import { Timeline } from "./components/Timeline";
+import { Ribbon } from "./components/ribbon/Ribbon";
+import { Timeline } from "./components/timeline/Timeline";
 import { RightPanel } from "./components/RightPanel";
 
 export function Editor() {

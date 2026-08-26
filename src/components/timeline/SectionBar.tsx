@@ -1,8 +1,9 @@
-import { useProjectStore } from "../store/project-store";
+import { useProjectStore } from "../../store/project-store";
 
 export function SectionBar({index}: {index: number}) {
     const section = useProjectStore((store) => store.project.timeline[index]);
     const setSectionName = useProjectStore((store) => store.setSectionName);
+    const shiftInTimeline = useProjectStore((store) => store.shiftInTimeline);
     const removeFromTimeline = useProjectStore((store) => store.removeFromTimeline);
     if (section.type !== "section") return;
 
@@ -14,6 +15,21 @@ export function SectionBar({index}: {index: number}) {
             value={section.name}
             onChange={(e) => setSectionName(index, e.target.value)} 
         />
+
+        <div
+            className="select-none flex-init w-5 text-center hover:bg-stone-100"
+            onClick={() => shiftInTimeline(index, -1)}
+        >
+            🡩
+        </div>
+
+        <div
+            className="select-none flex-init w-5 text-center hover:bg-stone-100"
+            onClick={() => shiftInTimeline(index, 1)}
+        >
+            🡫
+        </div>
+
         <div
             className="select-none flex-init w-5 text-center hover:bg-red-200"
             onClick={() => removeFromTimeline(index)}

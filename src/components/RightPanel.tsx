@@ -1,5 +1,5 @@
 import { useEditorStore } from "../store/editor-store";
-import { PatternEditor } from "./PatternEditor";
+import { PatternEditor } from "./patterneditor/PatternEditor";
 import { ProjectEditor } from "./ProjectEditor";
 
 export function RightPanel() {

@@ -1,7 +1,7 @@
 
-import { useProjectStore } from "../store/project-store";
+import { useProjectStore } from "../../store/project-store";
 
-import { MeasureCard } from "./MeasureCard";
+import { MeasureCard } from "../timeline/MeasureCard";
 
 export function MeasureRow({first = undefined, last = undefined, width = 4}: {first?: number, last?: number, width?: number}) {
     const timeline = useProjectStore((state) => state.project.timeline);

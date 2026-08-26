@@ -1,5 +1,5 @@
-import { useEditorStore } from "../store/editor-store";
-import { useProjectStore } from "../store/project-store"
+import { useEditorStore } from "../../store/editor-store";
+import { useProjectStore } from "../../store/project-store"
 import { PatternList } from "./PatternList";
 
 export function PatternEditor() {

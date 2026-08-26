@@ -1,5 +1,5 @@
-import { useEditorStore } from "../store/editor-store";
-import { useProjectStore } from "../store/project-store";
+import { useEditorStore } from "../../store/editor-store";
+import { useProjectStore } from "../../store/project-store";
 
 export function PatternCard({ id }: { id: number }) {
     const pattern = useProjectStore((state) => state.project.patterns.find((p) => p.id === id));

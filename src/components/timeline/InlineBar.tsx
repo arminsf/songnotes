@@ -1,4 +1,4 @@
-import { useProjectStore } from "../store/project-store"
+import { useProjectStore } from "../../store/project-store"
 
 export function InlineBar({timelinePosition}: {timelinePosition: number}) {
     const newSection = useProjectStore((state) => state.newSection);

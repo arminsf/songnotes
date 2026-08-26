@@ -50,7 +50,7 @@ export function Welcome() {
                         }}
                     >Open song</div>
                 </div>
-                <a className="text-sky-600 font-mono text-md hover:underline cursor-pointer" href="https://github.com/arminsf">github</a>
+                <a className="text-sky-600 font-mono text-md hover:underline cursor-pointer" href="https://github.com/">github</a>
             </div>
         </div>
     );

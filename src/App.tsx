@@ -7,7 +7,7 @@ function App() {
   const editorOpen = useEditorStore((state) => state.editorOpen);
 
   return (
-    <div className="w-screen h-screen p-1">
+    <div className="w-screen h-screen p-3">
       { editorOpen ?
         <Editor /> : <Welcome />
       }

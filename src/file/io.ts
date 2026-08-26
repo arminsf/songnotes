@@ -38,29 +38,26 @@ export async function uploadProject(): Promise<Project> {
     });
 }
 
+export async function uploadAudio(): Promise<string> {
+    return new Promise((resolve, reject) => {
+        function whenChanged(this: HTMLInputElement, ev: Event) {
+            if (!this.files || !this.files[0]) {
+                reject(new Error("upload failed"));
+                return;
+            }
 
-//  function onUpload(this: HTMLInputElement, ev: Event): Promise<Project> {
-//         return new Promise((resolve, reject) => {
-//             if (!this.files || !this.files[0]) {
-//                 reject(new Error("upload failed"));
-//                 return;
-//             }
-            
-//             const file = this.files[0];
-//             if (file.type !== "application/json") {
-//                 reject(new Error("file is not json"));
-//                 return;
-//             }
-            
-//             file.text().then((json) => {
-//                 const project = deserializeProject(json);
-//                 resolve(project);
-//             });
-//         });
-//     }
+            const file = this.files[0];
+            if (!file.type.startsWith("audio")) {
+                reject(new Error("file is not audio"));
+                return;
+            }
 
+            resolve(URL.createObjectURL(file));
+        }
 
-//     const input = document.createElement('input');
-//     input.type="file";
-//     input.addEventListener("change", onUpload);
-//     input.click();
+        const input = document.createElement('input');
+        input.type="file";
+        input.addEventListener("change", whenChanged);
+        input.click();
+    });
+}

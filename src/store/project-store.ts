@@ -19,7 +19,6 @@ const initialProject: Project = {
             },
         ],
         timeline: [
-            {type: "section", name: "verse"},
             {type: "measure", pattern: 0},
             {type: "measure", pattern: 0},
             {type: "measure", pattern: 0},
@@ -34,6 +33,7 @@ interface ProjectStore {
     editProject: (patch: Partial<Omit<Project, 'patterns' | 'timeline'>>) => void,
 
     editPattern: (patternId: number, patch: Partial<Pattern>) => void,
+    shiftInTimeline: (index: number, offset: number) => void,
     removeFromTimeline: (index: number) => void,
     newPattern: (clickedMeasureIndex: number | null) => number | null,
     newMeasure: () => void,
@@ -49,12 +49,17 @@ export const useProjectStore = create<ProjectStore>((set) => ({
 
     loadProject: (project) => set({project: project}),
 
-    editProject: (patch) => set((state) => ({
-        project: {
-            ...state.project,
-            ...patch,
+    editProject: (patch) => set((state) => {
+        patch.bpm = Math.max(patch.bpm || 120, 10);
+        patch.bpm = Math.min(patch.bpm || 120, 522);
+
+        return {
+            project: {
+                ...state.project,
+                ...patch,
+            } 
         }
-    })),
+    }),
 
     editPattern: (patternId, patch) => set((state) => ({
         project: {
@@ -62,6 +67,26 @@ export const useProjectStore = create<ProjectStore>((set) => ({
             patterns: state.project.patterns.map((p) => p.id === patternId ? {...p, ...patch} : p),
         }
     })),
+
+    shiftInTimeline: (index: number, offset: number) => set((state) => {
+        offset = Math.max(-index, offset);
+        offset = Math.min(state.project.timeline.length - index - 1, offset);
+
+        
+
+        return (offset === 0) ? {} : { 
+            project: {
+                ...state.project,
+                timeline: [
+                    ...state.project.timeline.slice(undefined, Math.min(index, index + offset)),
+                    ...(offset < 0 ? [state.project.timeline[index]] : []),
+                    ...state.project.timeline.slice(Math.min(index, index + offset) + (offset > 0 ? 1 : 0), Math.max(index, index + offset) + (offset > 0 ? 1 : 0)),
+                    ...(offset > 0 ? [state.project.timeline[index]] : []),
+                    ...state.project.timeline.slice(Math.max(index, index + offset) + 1, undefined),
+                ],
+            }
+        }
+    }),
 
     removeFromTimeline: (index) => set((state) => ({
         project: {
@@ -76,7 +101,7 @@ export const useProjectStore = create<ProjectStore>((set) => ({
         let r : number | null = null;
         
         set((state) => {
-            let newPatternId = 1 + Math.max(...state.project.patterns.map((p) => p.id));
+            let newPatternId = Math.max(1 + Math.max(...state.project.patterns.map((p) => p.id)), 0);
             r = newPatternId;
             return {
                 project: {

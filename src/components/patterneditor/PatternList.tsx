@@ -1,4 +1,4 @@
-import { useProjectStore } from "../store/project-store";
+import { useProjectStore } from "../../store/project-store";
 import { PatternCard } from "./PatternCard";
 
 export function PatternList() {
