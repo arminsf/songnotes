@@ -10,7 +10,7 @@ export function SectionBar({index}: {index: number}) {
     return (
         <div className="z-30 sticky -top-3 flex flex-row w-full bg-white border-b-2">
         <input
-            className="w-20 flex-1"
+            className="flex-1"
             type="text"
             value={section.name}
             onChange={(e) => setSectionName(index, e.target.value)} 

@@ -56,7 +56,7 @@ export function Welcome() {
                         onClick={() => {
                             if (projectOpened) alert("the app should ask you if you want to discard your work right now.")
 
-                            fetchProject("/Lagtrain.json").then((project) => {
+                            fetchProject("/songnotes/Lagtrain.json").then((project) => {
                                 loadProject(project); 
                                 setProjectOpened(true); 
                                 setEditorOpen(true);

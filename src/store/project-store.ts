@@ -31,7 +31,9 @@ interface ProjectStore {
     newMeasure: () => void,
     setMeasurePattern: (measureIndex: number, patternId: number | null) => void,
     newSection: (at: number) => void,
+    newPause: (at: number) => void,
     setSectionName: (sectionIndex: number, name: string) => void,
+    setPauseDuration: (pauseIndex: number, duration: number) => void,
 }
 
 export const useProjectStore = create<ProjectStore>((set) => ({
@@ -137,10 +139,24 @@ export const useProjectStore = create<ProjectStore>((set) => ({
         }
     })),
 
+    newPause: (at) => set((state) => ({
+        project: {
+            ...state.project,
+            timeline: [...state.project.timeline.slice(undefined, at), {type: "pause", duration: 0.5}, ...state.project.timeline.slice(at, undefined)],
+        }
+    })),
+
     setSectionName: (sectionIndex, name) => set((state) => ({
         project: {
             ...state.project,
             timeline: state.project.timeline.map((s, i) => (i === sectionIndex ? {...s, name: name} : s)),
+        }
+    })),
+
+    setPauseDuration: (pauseIndex, duration) => set((state) => ({
+        project: {
+            ...state.project,
+            timeline: state.project.timeline.map((s, i) => (i === pauseIndex ? {...s, duration: duration} : s)),
         }
     })),
 }))

@@ -13,7 +13,7 @@ export function downloadProject(project: Project) {
 
 export async function uploadProject(): Promise<Project> {
     return new Promise((resolve, reject) => {
-        function whenChanged(this: HTMLInputElement, ev: Event) {
+        function whenChanged(this: HTMLInputElement) {
             if (!this.files || !this.files[0]) {
                 reject(new Error("upload failed"));
                 return;
@@ -47,7 +47,7 @@ export async function fetchProject(url: string): Promise<Project> {
 
 export async function uploadAudio(): Promise<string> {
     return new Promise((resolve, reject) => {
-        function whenChanged(this: HTMLInputElement, ev: Event) {
+        function whenChanged(this: HTMLInputElement) {
             if (!this.files || !this.files[0]) {
                 reject(new Error("upload failed"));
                 return;

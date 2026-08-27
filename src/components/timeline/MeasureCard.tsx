@@ -1,6 +1,6 @@
 import { useProjectStore } from "../../store/project-store";
 import { useEditorStore } from "../../store/editor-store";
-import { measureBeginSecond, measureDurationSeconds, rankMeasure } from "../../types/project";
+import { timelineObjectBeginSecond, measureDurationSeconds, rankMeasure } from "../../types/project";
 import { useEffect, useRef } from "react";
 import { usePlayback } from "../../playback/usePlayback";
 
@@ -23,17 +23,26 @@ export function MeasureCard({index}: {index: number}) {
 
     const selectedPattern = useProjectStore((state) => state.project.patterns.find((p) => p.id === selectedPatternId));
     
-    const beginS = measureBeginSecond(project, index) || 0;
+    const beginS = timelineObjectBeginSecond(project, index) || 0;
     const duration = measureDurationSeconds(project, index);
 
     const progressbarRef = useRef<HTMLDivElement>(null);
 
-    const {getCurrentTime, seek} = usePlayback();
+    const {getCurrentTime, seek, playing} = usePlayback();
     
     useEffect(() => {
         let raf: number;
         const tick = () => {
-            const w = 100 * Math.min(1, Math.max(0, getCurrentTime() - beginS) / duration);
+            const t = getCurrentTime();
+            let w = 0;
+            if (t < beginS) {w = 0;}
+            else if (t > beginS + duration) {w = 100;}
+            else {
+                const v = Math.min(1, Math.max(0, t - beginS) / duration);
+                const q = Math.floor(4 * v) / 4;
+                const r = 1/4 - v + q;
+                w = 100 * (q + 1/4 - Math.pow(4*r, 5)/4);
+            }
             if (progressbarRef.current)
                 progressbarRef.current.style.width = `${w}%`;
             raf = requestAnimationFrame(tick);
@@ -81,8 +90,8 @@ export function MeasureCard({index}: {index: number}) {
                 }
                 
             </div>
-            <div className={"h-1 -mb-2 -translate-y-1" + (pattern ? "" : " border-dotted")}>
-                <div className="bg-black h-full w-1/4" ref={progressbarRef}>
+            <div className={"h-2 -mb-2 -translate-y-2 px-px" + (pattern ? "" : " border-dotted")}>
+                <div className="opacity-40 bg-black h-full w-0" ref={progressbarRef}>
 
                 </div>
             </div>

@@ -17,7 +17,12 @@ export interface Section {
     name: string
 }
 
-export type TimelineObject = Measure | Section;
+export interface Pause {
+    type: "pause",
+    duration: number,
+}
+
+export type TimelineObject = Measure | Section | Pause;
 
 export type Timeline = TimelineObject[];
 
@@ -61,18 +66,34 @@ export function rankMeasure (timeline: Timeline, index: number): number | null {
     return null;
 }
 
-export function measureBeginSecond (project: Project, index: number) {
-    const r = rankMeasure(project.timeline, index);
-    return r && (r * project.timeSignNom * 60 / project.bpm);
-}
-
 // writing a function for this makes it easy to have measures with overridden time sigs
 export function measureDurationSeconds (project: Project, index: number) {
+    index; // will need later, just need to shut typescript up
     return (project.timeSignNom * 60 / project.bpm);
 }
 
+// maybe give a cache to this. it should also set the cache
+export function timelineObjectBeginSecond(project: Project, index: number) {
+    let timestamp = 0;
+    for (let i = 0; i < project.timeline.length; i++) {
+        if (i === index) return timestamp;
+
+        if (project.timeline[i].type === "measure")
+            timestamp += (project.timeSignNom * 60 / project.bpm); // todo: overridable time signature in pattern
+
+        if (project.timeline[i].type === "pause")
+            timestamp += project.timeline[i].duration;
+    }
+
+    return null;
+}
+
 // these two will get more complicated later, that's why they get the whole project
-export let measureRankAtSecond = (project: Project, second: number) => ({
-    rank: Math.floor((project.bpm / project.timeSignNom) * (second / 60)),
-    progress: ((project.bpm / project.timeSignNom) * (second / 60)) % 1
-})
+// todo: maybe add a cache argument to this
+export function measureRankAtSecond (project: Project, second: number) {
+
+    return {
+        rank: Math.floor((project.bpm / project.timeSignNom) * (second / 60)),
+        progress: ((project.bpm / project.timeSignNom) * (second / 60)) % 1
+    }
+}

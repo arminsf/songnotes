@@ -1,6 +1,7 @@
 import { useProjectStore } from "../../store/project-store";
 import { InlineBar } from "./InlineBar";
 import { MeasureRow } from "./MeasureRow";
+import { PauseBar } from "./PauseBar";
 import { SectionBar } from "./SectionBar";
 
 export function Timeline() {
@@ -31,6 +32,11 @@ export function Timeline() {
 
             if (timelineObject.type === "section") {
                 yield <SectionBar key={`section-${i}`} index={i} />;
+                yield <InlineBar key={`inlinebar-${i+1}`} timelinePosition={i+1} />;
+            }
+
+            if (timelineObject.type === "pause") {
+                yield <PauseBar key={`pause-${i}`} index={i} />;
                 yield <InlineBar key={`inlinebar-${i+1}`} timelinePosition={i+1} />;
             }
         }
