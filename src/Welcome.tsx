@@ -1,6 +1,13 @@
-import { uploadProject } from "./file/io";
+import { fetchProject, uploadProject } from "./file/io";
 import { useEditorStore } from "./store/editor-store";
 import { useProjectStore } from "./store/project-store";
+
+function WelcomePageButton({onClick, label}: {onClick: () => void, label: string}) {
+    return (<div 
+                className="hover:bg-stone-100 -my-1 py-1 -mx-5 px-5"
+                onClick={onClick}
+            >{label}</div>);
+}
 
 export function Welcome() {
     const projectName = useProjectStore((state) => state.project.name);
@@ -16,25 +23,18 @@ export function Welcome() {
             <div className="border-2 border-stone-200 flex flex-col gap-8 p-5 w-100 ">
                 <h1 className="text-3xl">Songnotes</h1>
                 <div className="flex flex-col gap-2">
-                    { projectOpened ?
-                        (<div 
-                            className="hover:bg-stone-100 -my-1 py-1 -mx-5 px-5"
-                            onClick={() => {setEditorOpen(true);}}
-                        >Back to {projectName}</div>)
-                        :
-                        <></>
-                    }
+                    { projectOpened && <WelcomePageButton onClick={() => {setEditorOpen(true);}} label={`Back to ${projectName}`} /> }
 
-                    <div 
-                        className="hover:bg-stone-100 -my-1 py-1 -mx-5 px-5"
+                    <WelcomePageButton 
                         onClick={() => {
                             if (projectOpened) alert("the app should ask you if you want to discard your work right now.")
                             
-                                resetProject(); 
+                            resetProject(); 
                             setProjectOpened(true); 
                             setEditorOpen(true);
                         }}
-                    >New song</div>
+                        label="New song"
+                    />
 
                     <div 
                         className="hover:bg-stone-100 -my-1 py-1 -mx-5 px-5"
@@ -49,8 +49,22 @@ export function Welcome() {
                             .catch(alert);
                         }}
                     >Open song</div>
+
+                    <h3 className="font-mono border-b text-stone-500">Examples</h3>
+
+                    <WelcomePageButton 
+                        onClick={() => {
+                            if (projectOpened) alert("the app should ask you if you want to discard your work right now.")
+
+                            fetchProject("/Lagtrain.json").then((project) => {
+                                loadProject(project); 
+                                setProjectOpened(true); 
+                                setEditorOpen(true);
+                            });
+                        }}
+                        label="Lagtrain"
+                    />
                 </div>
-                <a className="text-sky-600 font-mono text-md hover:underline cursor-pointer" href="https://github.com/">github</a>
             </div>
         </div>
     );

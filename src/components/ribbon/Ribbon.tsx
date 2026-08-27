@@ -40,7 +40,7 @@ export function Ribbon() {
                         type="number"
                         value={project.bpm}
                         onChange={(e) => editProject({bpm: Number(e.target.value)})}
-                        onWheel={(e) => {e.preventDefault(); editProject({bpm: project.bpm + (e.deltaY > 0 ? 1 : -1)})}}
+                        onWheel={(e) => {e.preventDefault(); editProject({bpm: project.bpm - Math.sign(e.deltaY)})}}
                     />
                 </div>
                 <Tapper />

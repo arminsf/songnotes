@@ -12,7 +12,7 @@ export function RibbonDJ() {
                     <div className="flex-init hover:bg-stone-100 p-1 text-xl" onClick={() => {playing ? pause() : play();}}>
                         {playing ? "⏸️" : "▶️"}</div>
                     <SeekBar />
-                    <div className="flex-init hover:bg-stone-100 p-1" onClick={closeAudio}>unload song</div>
+                    <div className="flex-init hover:bg-stone-100 p-1" onClick={closeAudio}>unopen song</div>
                 </div>
         )
         :

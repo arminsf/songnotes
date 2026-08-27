@@ -38,6 +38,13 @@ export async function uploadProject(): Promise<Project> {
     });
 }
 
+export async function fetchProject(url: string): Promise<Project> {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const json = await blob.text();
+    return deserializeProject(json);
+}
+
 export async function uploadAudio(): Promise<string> {
     return new Promise((resolve, reject) => {
         function whenChanged(this: HTMLInputElement, ev: Event) {
