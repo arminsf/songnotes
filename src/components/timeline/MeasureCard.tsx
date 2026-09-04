@@ -28,7 +28,7 @@ export function MeasureCard({index}: {index: number}) {
 
     const progressbarRef = useRef<HTMLDivElement>(null);
 
-    const {getCurrentTime, seek, playing} = usePlayback();
+    const {getCurrentTime, seek} = usePlayback();
     
     useEffect(() => {
         let raf: number;
@@ -55,21 +55,22 @@ export function MeasureCard({index}: {index: number}) {
     
     return (
         <div 
-            className={"flex flex-col "}
+            className={"relative flex flex-col"}
             onClick={() => seek(beginS)}
+            style={{backgroundColor: pattern ? pattern.color : "#FFF"}}
         >
             <div 
-                className={"relative select-none flex w-full h-14 text-center border-2" + (pattern ? "" : " border-dotted") + (pattern && hoveredPatternId === patternId ? " bg-stone-100" : "")}
+                className={"relative select-none flex w-full h-14 text-center border-2" + (pattern ? "" : " border-dotted")}
             >
-                <span className="z-10 absolute left-1 top-0.5 text-stone-600 text-xs">{rank !== null ? rank + 1 : "???"}</span>
+                <span className="absolute left-1 top-0.5 text-stone-600 text-xs">{rank !== null ? rank + 1 : "???"}</span>
                 {pattern ? 
                     (<>
                         <div 
-                            className="place-content-center flex-1 hover:bg-stone-100"
+                            className="z-10 hover:bg-[#00000025] place-content-center flex-1"
                             onClick={() => {return pattern ? selectPattern(pattern.id) : null;}}
                         >{pattern.label}</div>
                         <div 
-                            className="hover:bg-stone-100 w-4 flex-initial border-l-2 border-dotted place-content-center"
+                            className="z-10 hover:bg-[#00000025] w-4 flex-initial border-l-2 border-dotted place-content-center"
                             onClick={() => setMeasurePattern(index, null)}
                         >-</div>
                     </>)
@@ -77,13 +78,13 @@ export function MeasureCard({index}: {index: number}) {
                     // todo: make the hover the color of the pattern about to be made
                     (<>
                         <div 
-                            className="text-transparent hover:text-black flex-1 hover:bg-stone-100 place-content-center"
+                            className="z-10 hover:bg-[#00000025] text-transparent hover:text-black flex-1 place-content-center"
                             onClick={() => {if (selectedPatternId !== null) setMeasurePattern(index, selectedPatternId)}}
                         > 
                             {selectedPattern?.label}
                         </div>
                         <div 
-                            className="hover:bg-stone-100 w-4 flex-initial border-l-2 border-dotted place-content-center"
+                            className="z-10 hover:bg-[#00000025] w-4 flex-initial border-l-2 border-dotted place-content-center"
                             onClick={() => selectPattern(newPattern(index))}
                         >+</div>
                     </>)
@@ -95,6 +96,9 @@ export function MeasureCard({index}: {index: number}) {
 
                 </div>
             </div>
+            <div
+                className={"absolute bg-black opacity-0 size-full" + (pattern && hoveredPatternId === patternId ? " opacity-10" : "")}
+            ></div>
         </div>
     )
 }

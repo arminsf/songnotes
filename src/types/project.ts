@@ -81,7 +81,7 @@ export function timelineObjectBeginSecond(project: Project, index: number) {
         if (project.timeline[i].type === "measure")
             timestamp += (project.timeSignNom * 60 / project.bpm); // todo: overridable time signature in pattern
 
-        if (project.timeline[i].type === "pause")
+        if (project.timeline[i].type === "pause") // how do i make ts stop screaming at me for this
             timestamp += project.timeline[i].duration;
     }
 
@@ -91,7 +91,6 @@ export function timelineObjectBeginSecond(project: Project, index: number) {
 // these two will get more complicated later, that's why they get the whole project
 // todo: maybe add a cache argument to this
 export function measureRankAtSecond (project: Project, second: number) {
-
     return {
         rank: Math.floor((project.bpm / project.timeSignNom) * (second / 60)),
         progress: ((project.bpm / project.timeSignNom) * (second / 60)) % 1

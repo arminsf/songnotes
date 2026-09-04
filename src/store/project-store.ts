@@ -1,5 +1,8 @@
 import type { Pattern, Project } from "../types/project"; 
+
+import { hsvToRgb, colorToHexCode } from "../utils.ts";
 import { create } from "zustand";
+
 // import { produce } from "immer";
 
 const initialProject: Project = {
@@ -44,8 +47,10 @@ export const useProjectStore = create<ProjectStore>((set) => ({
     loadProject: (project) => set({project: project}),
 
     editProject: (patch) => set((state) => {
-        patch.bpm = Math.max(patch.bpm || 1, 1);
-        patch.bpm = Math.min(patch.bpm || 522, 522);
+        if (patch.bpm) {
+            patch.bpm = Math.max(patch.bpm || 1, 1);
+            patch.bpm = Math.min(patch.bpm || 522, 522);
+        }
 
         return {
             project: {
@@ -105,7 +110,7 @@ export const useProjectStore = create<ProjectStore>((set) => ({
                             id: newPatternId,
                             name: `New Pattern ${newPatternId}`,
                             label: `NP${newPatternId}`,
-                            color: "#0000BB",
+                            color: colorToHexCode(hsvToRgb(Math.random()*10, 0.2, 1)),
                             notes: "",
                         }
                     ],

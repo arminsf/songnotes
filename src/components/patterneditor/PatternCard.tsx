@@ -12,6 +12,7 @@ export function PatternCard({ id }: { id: number }) {
             onClick={() => selectPattern(id)}
             onMouseEnter={() => hoverPattern(id)}
             onMouseLeave={() => hoverPattern(null)}
+            style={{backgroundColor: pattern.color}}
         >
             <div className="flex flex-row gap-3">
             <div className="text-lg flex-1">{pattern.name}</div>

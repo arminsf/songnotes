@@ -21,12 +21,22 @@ export function PatternEditor() {
                 value={pattern.name}
                 onChange={(e) => editPattern(pattern.id, {name: e.target.value})} 
             />
-            <input 
-                className="border w-30 p-1" 
-                type="text"
-                value={pattern.label}
-                onChange={(e) => editPattern(pattern.id, {label: e.target.value})} 
-            />
+            <div className="flex gap-2 items-center flex-wrap">
+                <span>Label: </span>
+                <input 
+                    className="border w-15 p-1" 
+                    type="text"
+                    value={pattern.label}
+                    onChange={(e) => editPattern(pattern.id, {label: e.target.value})} 
+                />
+                <span>Color: </span>
+                <input
+                    className="h-full"
+                    type="color"
+                    value={pattern.color}
+                    onChange={(e) => editPattern(pattern.id, {color: e.target.value})}
+                />
+            </div>
             <textarea 
                 className="border resize-none w-full h-full p-2" 
                 value={pattern.notes}
