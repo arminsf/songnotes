@@ -67,6 +67,7 @@ export const useProjectStore = create<ProjectStore>((set) => ({
         }
     })),
 
+    // updates cache
     shiftInTimeline: (index: number, offset: number) => set((state) => {
         offset = Math.max(-index, offset);
         offset = Math.min(state.project.timeline.length - index - 1, offset);
@@ -87,6 +88,7 @@ export const useProjectStore = create<ProjectStore>((set) => ({
         }
     }),
 
+    // updates cache
     removeFromTimeline: (index) => set((state) => ({
         project: {
             ...state.project,

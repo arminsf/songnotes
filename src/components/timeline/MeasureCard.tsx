@@ -39,9 +39,9 @@ export function MeasureCard({index}: {index: number}) {
             else if (t > beginS + duration) {w = 100;}
             else {
                 const v = Math.min(1, Math.max(0, t - beginS) / duration);
-                const q = Math.floor(4 * v) / 4;
-                const r = 1/4 - v + q;
-                w = 100 * (q + 1/4 - Math.pow(4*r, 5)/4);
+                const q = Math.floor(project.timeSignNom * v) / project.timeSignNom;
+                const r = 1/project.timeSignNom - v + q;
+                w = 100 * (q + 1/project.timeSignNom - Math.pow(project.timeSignNom*r, 5)/project.timeSignNom);
             }
             if (progressbarRef.current)
                 progressbarRef.current.style.width = `${w}%`;

@@ -24,6 +24,36 @@ export function ProjectEditor() {
                 onBlur={() => {editProject({name: validateProjectName(project.name)});}}
             />
             
+            <div className="flex items-center gap-2">
+            <span>Time signature: </span>
+                <div className="flex flex-col">
+                    <input 
+                        className="border border-stone-300 w-15 p-1" 
+                        type="number"
+                        value={project.timeSignNom}
+                        onChange={(e) => editProject({timeSignNom: parseInt(e.target.value)})}
+                    />
+                    <input 
+                        className="border-stone-300 w-15 p-1" 
+                        type="number"
+                        disabled={true}
+                        value={project.timeSignDen}
+                        onChange={(e) => editProject({timeSignDen: parseInt(e.target.value)})}
+                    />
+                </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+            <span>Phrase length (in measures): </span>
+                <input 
+                    className="border border-stone-300 w-15 p-1" 
+                    type="number"
+                    value={project.phraseLength}
+                    onChange={(e) => editProject({phraseLength: parseInt(e.target.value)})}
+                />
+
+            </div>
+
             <p>Todo: Time signature, key, phrase length settings.</p>
         </div>
     );
