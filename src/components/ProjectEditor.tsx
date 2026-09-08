@@ -1,6 +1,6 @@
 import { useEditorStore } from "../store/editor-store";
 import { useProjectStore } from "../store/project-store";
-import { validateProjectName } from "../types/project";
+import { validateProjectName } from "../project/validation";
 
 export function ProjectEditor() {
     const project = useProjectStore((state) => state.project);

@@ -1,6 +1,6 @@
 import { useProjectStore } from "../../store/project-store";
 import { useEditorStore } from "../../store/editor-store";
-import { timelineObjectBeginSecond, measureDurationSeconds, rankMeasure } from "../../types/project";
+import { timelineObjectBeginSecond, measureDurationSeconds, rankMeasure } from "../../project/timeline";
 import { useEffect, useRef } from "react";
 import { usePlayback } from "../../playback/usePlayback";
 

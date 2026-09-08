@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useProjectStore } from "../../store/project-store";
 import { usePlayback } from "../../playback/usePlayback";
-import { timelineObjectBeginSecond } from "../../types/project";
+import { timelineObjectBeginSecond } from "../../project/timeline";
 
 export function PauseBar({index}: {index: number}) {
     const project = useProjectStore((store) => store.project);
