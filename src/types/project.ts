@@ -1,9 +1,11 @@
+import type { AbsChord, Note } from "../musictheory/notes";
+
 export interface Pattern {
     id: number,
     name: string,
     label: string,
     color: string,
-    chord?: string,
+    chord?: AbsChord,
     notes: string,
 }
 
@@ -29,7 +31,7 @@ export type Timeline = TimelineObject[];
 export interface Project {
     name: string,
     bpm: number,
-    key: string, // todo: music theory types
+    key: Note,
     timeSignNom: number,
     timeSignDen: number,
     phraseLength: number,

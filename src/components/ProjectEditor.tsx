@@ -1,6 +1,9 @@
+import type { NoteName } from "../musictheory/notes";
+
 import { useEditorStore } from "../store/editor-store";
 import { useProjectStore } from "../store/project-store";
 import { validateProjectName } from "../project/validation";
+import { noteName, parseNote } from "../musictheory/notes";
 
 export function ProjectEditor() {
     const project = useProjectStore((state) => state.project);
@@ -54,9 +57,16 @@ export function ProjectEditor() {
 
             </div>
 
-            <p>Todo: Time signature, key, phrase length settings.</p>
+            <div className="flex items-center gap-2">
+                <span>Key: </span>
+                <select value={noteName(project.key)} onChange={(e) => editProject({key: parseNote(e.target.value as NoteName)})}>
+                    {['A', 'B', 'C', 'D', 'E', 'F', 'G'].map((letter) => (<>
+                        <option key={letter+"b"} value={letter+"b"}>{letter+"♭"}</option>
+                        <option key={letter} value={letter}>{letter}</option>
+                        <option key={letter+"s"} value={letter+"#"}>{letter+"♯"}</option>
+                    </>))}
+                </select>
+            </div>
         </div>
     );
-
-    // todo: bpm, key, time signature, phraseLength
 }

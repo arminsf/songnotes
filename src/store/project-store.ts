@@ -1,3 +1,4 @@
+import { parseNote } from "../musictheory/notes.ts";
 import type { Pattern, Project } from "../types/project"; 
 
 import { hsvToRgb, colorToHexCode } from "../utils.ts";
@@ -8,7 +9,7 @@ import { create } from "zustand";
 const initialProject: Project = {
         name: "Untitled",
         bpm: 120,
-        key: "C major",
+        key: parseNote("C"),
         timeSignNom: 4,
         timeSignDen: 4,
         phraseLength: 4,

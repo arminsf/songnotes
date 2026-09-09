@@ -1,11 +1,16 @@
+import { useState } from "react";
+import { absChordName, chordRelative, noteInKey, noteName, parseNote, parseRelChord, relChordName, relChordNameRootOnly, ROMAN_NUMERALS, type NoteName, type RelChordName } from "../../musictheory/notes";
 import { useEditorStore } from "../../store/editor-store";
 import { useProjectStore } from "../../store/project-store"
 import { PatternList } from "./PatternList";
 
 export function PatternEditor() {
+    const [usingRelative, setUsingRelative] = useState(false);
+
     const selectedPatternId = useEditorStore((state) => state.selectedPatternId);
     const selectPattern = useEditorStore((state) => state.selectPattern)
 
+    const key = useProjectStore((state) => state.project.key);
     const pattern = useProjectStore((state) => state.project.patterns.find((p) => p.id === selectedPatternId));
     const editPattern = useProjectStore((state) => state.editPattern);
 
@@ -15,12 +20,14 @@ export function PatternEditor() {
                 className="select-none absolute size-6 hover:bg-stone-200 top-4 right-4 text-center place-content-center"
                 onClick={() => selectPattern(null)}
             >×</div>
+
             <input 
                 className="w-60 text-xl p-1" 
                 type="text"
                 value={pattern.name}
                 onChange={(e) => editPattern(pattern.id, {name: e.target.value})} 
             />
+
             <div className="flex gap-2 items-center flex-wrap">
                 <span>Label: </span>
                 <input 
@@ -37,6 +44,68 @@ export function PatternEditor() {
                     onChange={(e) => editPattern(pattern.id, {color: e.target.value})}
                 />
             </div>
+
+            <div className="flex gap-2 items-center flex-wrap">
+                <input type="checkbox" checked={!!pattern.chord} onChange={(e) => editPattern(pattern.id, {chord: e.target.checked ? {root: parseNote('C'), quality: ''} : undefined})} />
+                
+                <span>Chord</span>
+
+                {pattern.chord && (<>
+                    {!usingRelative ? (<>
+                    <select
+                        className="border"
+                        value={noteName(pattern.chord.root)} 
+                        onChange={(e) => editPattern(pattern.id, pattern.chord ? {chord: {...pattern.chord, root: parseNote(e.target.value as NoteName)}} : {})}
+                    >
+                        <option key="a0" value="">-</option>
+                        {['A', 'B', 'C', 'D', 'E', 'F', 'G'].map((letter) => (<>
+                            <option key={letter+"b"} value={letter+"b"}>{letter+"b"}</option>
+                            <option key={letter} value={letter}>{letter}</option>
+                            <option key={letter+"s"} value={letter+"#"}>{letter+"#"}</option>
+                        </>))}
+                    </select>
+
+                    <input 
+                        className="border w-14"
+                        type="text"
+                        value={pattern.chord.quality}
+                        onChange={(e) => editPattern(pattern.id, pattern.chord ? {chord: {...pattern.chord, quality: e.target.value}} : {})}
+                    />
+                    </>) : 
+                        <span className="hover:bg-stone-100"
+                            onClick={() => setUsingRelative(false)}
+                        >{absChordName(pattern.chord)}</span>
+                    }
+
+                    <span>=</span>
+
+                    {usingRelative ? (<>
+                        <select 
+                            className="border" 
+                            value={relChordNameRootOnly(chordRelative(pattern.chord, key))} 
+                            onChange={(e) => editPattern(pattern.id, pattern.chord ? {chord: {...pattern.chord, root: noteInKey(parseRelChord(e.target.value as RelChordName).root, key)}} : {})}
+                        >
+                            <option key="r0" value="">-</option>
+                            {ROMAN_NUMERALS.map((letter) => (<>
+                                <option key={"b"+letter} value={"b"+letter}>{"b"+letter}</option>
+                                <option key={letter} value={letter}>{letter}</option>
+                                <option key={"s"+letter} value={"#"+letter}>{"#"+letter}</option>
+                            </>))}
+                        </select>
+
+                        <input 
+                            className="border w-14"
+                            type="text"
+                            value={pattern.chord.quality}
+                            onChange={(e) => editPattern(pattern.id, pattern.chord ? {chord: {...pattern.chord, quality: e.target.value}} : {})}
+                        /> 
+                    </>) : (
+                        <span className="hover:bg-stone-200"
+                            onClick={() => setUsingRelative(true)}
+                        >{relChordName(chordRelative(pattern.chord, key))}</span>
+                    )}
+                </>)}
+            </div>
             <textarea 
                 className="border resize-none w-full h-full p-2" 
                 value={pattern.notes}
@@ -49,3 +118,4 @@ export function PatternEditor() {
         </div>
     )
 }
+
