@@ -67,12 +67,13 @@ export function PatternEditor() {
 
                     <input 
                         className="border w-14"
+                        list="chordtypes"
                         type="text"
                         value={pattern.chord.quality}
                         onChange={(e) => editPattern(pattern.id, pattern.chord ? {chord: {...pattern.chord, quality: e.target.value}} : {})}
                     />
                     </>) : 
-                        <span className="hover:bg-stone-100"
+                        <span className="hover:bg-stone-100 p-1 -m-1"
                             onClick={() => setUsingRelative(false)}
                         >{absChordName(pattern.chord)}</span>
                     }
@@ -95,15 +96,28 @@ export function PatternEditor() {
 
                         <input 
                             className="border w-14"
+                            list="chordtypes"
                             type="text"
                             value={pattern.chord.quality}
                             onChange={(e) => editPattern(pattern.id, pattern.chord ? {chord: {...pattern.chord, quality: e.target.value}} : {})}
                         /> 
                     </>) : (
-                        <span className="hover:bg-stone-200"
+                        <span className="hover:bg-stone-100 p-1 -m-1"
                             onClick={() => setUsingRelative(true)}
                         >{relChordName(chordRelative(pattern.chord, key))}</span>
                     )}
+
+                    <datalist id="chordtypes">
+                        <option></option>
+                        <option>m</option>
+                        <option>7</option>
+                        <option>maj7</option>
+                        <option>m7</option>
+                        <option>dim</option>
+                        <option>dim7</option>
+                        <option>sus4</option>
+                        <option>sus2</option>
+                    </datalist>
                 </>)}
             </div>
             <textarea 
