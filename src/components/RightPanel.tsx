@@ -3,7 +3,9 @@ import { PatternEditor } from "./patterneditor/PatternEditor";
 import { ProjectEditor } from "./ProjectEditor";
 
 export function RightPanel() {
-    const projectSettingsOpen = useEditorStore((state) => state.projectSettingsOpen);
+  const projectSettingsOpen = useEditorStore(
+    (state) => state.projectSettingsOpen,
+  );
 
-    return projectSettingsOpen ? (<ProjectEditor />) : (<PatternEditor />);
+  return projectSettingsOpen ? <ProjectEditor /> : <PatternEditor />;
 }
