@@ -13,7 +13,7 @@ export function Editor() {
           <Panel className="p-3" defaultSize={350} minSize={350}>
             <Timeline />
           </Panel>
-          <Separator className="border border-stone-400" />
+          <Separator className="border border-border-weak" />
           <Panel minSize={350}>
             <RightPanel />
           </Panel>

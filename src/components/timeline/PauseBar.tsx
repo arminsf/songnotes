@@ -31,7 +31,7 @@ export function PauseBar({index}: {index: number}) {
 
     return (
         <div className="relative z-30 flex flex-row w-full border-2">
-        <div className="-z-10 absolute bg-stone-400 h-full" ref={progressbarRef}></div>
+        <div className="-z-10 absolute bg-text opacity-50 h-full" ref={progressbarRef}></div>
         <span className="cursor-pointer pl-1 text-underline" onClick={() => seek(beginS)}>PAUSE</span>
         <input
             className="w-20 flex-1 ml-5 mr-16 px-1 border-x-1"
@@ -42,21 +42,21 @@ export function PauseBar({index}: {index: number}) {
         />
 
         <div
-            className="select-none flex-init w-5 text-center hover:bg-stone-100"
+            className="select-none flex-init w-5 text-center hover:bg-highlight"
             onClick={() => shiftInTimeline(index, -1)}
         >
             🡩
         </div>
 
         <div
-            className="select-none flex-init w-5 text-center hover:bg-stone-100"
+            className="select-none flex-init w-5 text-center hover:bg-highlight"
             onClick={() => shiftInTimeline(index, 1)}
         >
             🡫
         </div>
 
         <div
-            className="select-none flex-init w-5 text-center hover:bg-red-200"
+            className="select-none flex-init w-5 text-center hover:bg-danger"
             onClick={() => removeFromTimeline(index)}
         >
             ×

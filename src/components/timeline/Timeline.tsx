@@ -52,7 +52,7 @@ export function Timeline() {
             {[...constructTimeline()]}
 
             <div 
-                className="border-2 border-stone-400 hover:bg-stone-100 w-full h-10 place-content-center text-center text-stone-400" 
+                className="border-2 border-border-strong hover:bg-highlight w-full h-10 place-content-center text-center text-mute" 
                 onClick={() => [0,0,0,0].map(newMeasure)}
             >
             add 4 measures

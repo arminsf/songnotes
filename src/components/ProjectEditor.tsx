@@ -14,7 +14,7 @@ export function ProjectEditor() {
     return (
         <div className="relative flex flex-col gap-1 w-full h-full p-3">
             <div 
-                className="select-none absolute size-6 hover:bg-stone-200 top-4 right-4 text-center place-content-center"
+                className="select-none absolute size-6 hover:bg-highlight top-4 right-4 text-center place-content-center"
                 onClick={() => setProjectSettingsOpen(false)}
             >×</div>
 
@@ -31,13 +31,13 @@ export function ProjectEditor() {
             <span>Time signature: </span>
                 <div className="flex flex-col">
                     <input 
-                        className="border border-stone-300 w-15 p-1" 
+                        className="border border-border-weak w-15 p-1" 
                         type="number"
                         value={project.timeSignNom}
                         onChange={(e) => editProject({timeSignNom: parseInt(e.target.value)})}
                     />
                     <input 
-                        className="border-stone-300 w-15 p-1" 
+                        className="border-border-weak w-15 p-1" 
                         type="number"
                         disabled={true}
                         value={project.timeSignDen}
@@ -49,7 +49,7 @@ export function ProjectEditor() {
             <div className="flex items-center gap-2">
             <span>Phrase length (in measures): </span>
                 <input 
-                    className="border border-stone-300 w-15 p-1" 
+                    className="border border-border-weak w-15 p-1" 
                     type="number"
                     value={project.phraseLength}
                     onChange={(e) => editProject({phraseLength: parseInt(e.target.value)})}

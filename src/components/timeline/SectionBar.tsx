@@ -8,7 +8,7 @@ export function SectionBar({index}: {index: number}) {
     if (section.type !== "section") return;
 
     return (
-        <div className="z-30 sticky -top-3 flex flex-row w-full bg-white border-b-2">
+        <div className="z-30 sticky -top-3 flex flex-row w-full bg-background border-b-2">
         <input
             className="flex-1"
             type="text"
@@ -17,21 +17,21 @@ export function SectionBar({index}: {index: number}) {
         />
 
         <div
-            className="select-none flex-init w-5 text-center hover:bg-stone-100"
+            className="select-none flex-init w-5 text-center hover:bg-highlight"
             onClick={() => shiftInTimeline(index, -1)}
         >
             🡩
         </div>
 
         <div
-            className="select-none flex-init w-5 text-center hover:bg-stone-100"
+            className="select-none flex-init w-5 text-center hover:bg-highlight"
             onClick={() => shiftInTimeline(index, 1)}
         >
             🡫
         </div>
 
         <div
-            className="select-none flex-init w-5 text-center hover:bg-red-200"
+            className="select-none flex-init w-5 text-center hover:bg-danger"
             onClick={() => removeFromTimeline(index)}
         >
             ×

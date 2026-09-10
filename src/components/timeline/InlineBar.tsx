@@ -1,4 +1,6 @@
+import { PauseCircleIcon } from "@phosphor-icons/react/dist/icons/PauseCircle";
 import { useProjectStore } from "../../store/project-store"
+import { ClickableIcon } from "../ClickableIcon";
 
 export function InlineBar({timelinePosition}: {timelinePosition: number}) {
     const newSection = useProjectStore((state) => state.newSection);
@@ -16,7 +18,7 @@ export function InlineBar({timelinePosition}: {timelinePosition: number}) {
                 className="cursor-pointer h-0 py-2 -my-2 -translate-y-2 text-sm opacity-40 hover:opacity-100"
                 onClick={() => newPause(timelinePosition)}
             >
-                ⏸️
+                <ClickableIcon Icon={PauseCircleIcon} size={18} />
             </div>
         </div>
     )

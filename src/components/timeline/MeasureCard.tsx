@@ -3,6 +3,7 @@ import { useEditorStore } from "../../store/editor-store";
 import { timelineObjectBeginSecond, measureDurationSeconds, rankMeasure } from "../../project/timeline";
 import { useEffect, useRef } from "react";
 import { usePlayback } from "../../playback/usePlayback";
+import { colorToHexCode, contrastWithBackground } from "../../utils";
 
 export function MeasureCard({index}: {index: number}) {
     const project = useProjectStore((state) => state.project);
@@ -57,12 +58,15 @@ export function MeasureCard({index}: {index: number}) {
         <div 
             className={"relative flex flex-col"}
             onClick={() => seek(beginS)}
-            style={{backgroundColor: pattern ? pattern.color : "#FFF"}}
+            style={{
+                backgroundColor: pattern && colorToHexCode(pattern.color),
+                color: pattern && colorToHexCode(contrastWithBackground(pattern.color))
+            }}
         >
             <div 
-                className={"relative select-none flex w-full h-14 text-center border-2" + (pattern ? "" : " border-dotted")}
+                className={"relative select-none flex w-full h-14 text-center border-2 border-text" + (pattern ? "" : " border-dotted")}
             >
-                <span className="absolute left-1 top-0.5 text-stone-600 text-xs">{rank !== null ? rank + 1 : "???"}</span>
+                <span className="absolute left-1 top-0.5 opacity-70 text-xs">{rank !== null ? rank + 1 : "???"}</span>
                 {pattern ? 
                     (<>
                         <div 
@@ -78,7 +82,7 @@ export function MeasureCard({index}: {index: number}) {
                     // todo: make the hover the color of the pattern about to be made
                     (<>
                         <div 
-                            className="z-10 hover:bg-[#00000025] text-transparent hover:text-black flex-1 place-content-center"
+                            className="z-10 hover:bg-[#00000025] text-transparent hover:text-text flex-1 place-content-center"
                             onClick={() => {if (selectedPatternId !== null) setMeasurePattern(index, selectedPatternId)}}
                         > 
                             {selectedPattern?.label}
@@ -92,9 +96,10 @@ export function MeasureCard({index}: {index: number}) {
                 
             </div>
             <div className={"h-2 -mb-2 -translate-y-2 px-px" + (pattern ? "" : " border-dotted")}>
-                <div className="opacity-40 bg-black h-full w-0" ref={progressbarRef}>
-
-                </div>
+                <div 
+                    className="opacity-50 bg-text h-full w-0" ref={progressbarRef}
+                    style={{ backgroundColor: pattern && colorToHexCode(contrastWithBackground(pattern.color)) }}
+                ></div>
             </div>
             <div
                 className={"absolute bg-black opacity-0 size-full" + (pattern && hoveredPatternId === patternId ? " opacity-10" : "")}

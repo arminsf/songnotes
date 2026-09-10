@@ -3,6 +3,7 @@ import { absChordName, chordRelative, noteInKey, noteName, parseNote, parseRelCh
 import { useEditorStore } from "../../store/editor-store";
 import { useProjectStore } from "../../store/project-store"
 import { PatternList } from "./PatternList";
+import { colorToHexCode, hexCodeToColor } from "../../utils";
 
 export function PatternEditor() {
     const [usingRelative, setUsingRelative] = useState(false);
@@ -17,7 +18,7 @@ export function PatternEditor() {
     return pattern ? (
         <div className="relative flex flex-col gap-1 w-full h-full p-3">
             <div 
-                className="select-none absolute size-6 hover:bg-stone-200 top-4 right-4 text-center place-content-center"
+                className="select-none absolute size-6 hover:bg-highlight top-4 right-4 text-center place-content-center"
                 onClick={() => selectPattern(null)}
             >×</div>
 
@@ -40,8 +41,8 @@ export function PatternEditor() {
                 <input
                     className="h-full"
                     type="color"
-                    value={pattern.color}
-                    onChange={(e) => editPattern(pattern.id, {color: e.target.value})}
+                    value={colorToHexCode(pattern.color)}
+                    onChange={(e) => {editPattern(pattern.id, {color: hexCodeToColor(e.target.value)})} }
                 />
             </div>
 
@@ -66,14 +67,14 @@ export function PatternEditor() {
                     </select>
 
                     <input 
-                        className="border w-14"
+                        className="border w-15"
                         list="chordtypes"
                         type="text"
                         value={pattern.chord.quality}
                         onChange={(e) => editPattern(pattern.id, pattern.chord ? {chord: {...pattern.chord, quality: e.target.value}} : {})}
                     />
                     </>) : 
-                        <span className="hover:bg-stone-100 p-1 -m-1"
+                        <span className="hover:bg-highlight min-width-10 p-1 -m-1"
                             onClick={() => setUsingRelative(false)}
                         >{absChordName(pattern.chord)}</span>
                     }
@@ -95,20 +96,20 @@ export function PatternEditor() {
                         </select>
 
                         <input 
-                            className="border w-14"
+                            className="border w-15"
                             list="chordtypes"
                             type="text"
                             value={pattern.chord.quality}
                             onChange={(e) => editPattern(pattern.id, pattern.chord ? {chord: {...pattern.chord, quality: e.target.value}} : {})}
                         /> 
                     </>) : (
-                        <span className="hover:bg-stone-100 p-1 -m-1"
+                        <span className="hover:bg-highlight min-width-10 p-1 -m-1"
                             onClick={() => setUsingRelative(true)}
                         >{relChordName(chordRelative(pattern.chord, key))}</span>
                     )}
 
                     <datalist id="chordtypes">
-                        <option></option>
+                        <option value=" ">major</option>
                         <option>m</option>
                         <option>7</option>
                         <option>maj7</option>

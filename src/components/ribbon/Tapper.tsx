@@ -29,7 +29,7 @@ export function Tapper() {
 
     return (
         <button 
-            className="font-mono border w-full px-4 hover:bg-stone-100 active:bg-stone-200 rounded-full"
+            className="font-mono border w-full px-4 hover:bg-highlight active:bg-pressed rounded-full"
             onClick={tap}
         >
             tap! {runAv && Math.round(runAv)}

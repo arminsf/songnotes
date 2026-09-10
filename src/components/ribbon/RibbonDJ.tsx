@@ -3,6 +3,10 @@ import { usePlayback } from "../../playback/usePlayback"
 import { useProjectStore } from "../../store/project-store";
 import { SeekBar } from "./SeekBar";
 
+import { ClickableIcon } from "../ClickableIcon";
+import { PauseIcon } from "@phosphor-icons/react/dist/csr/Pause";
+import { PlayIcon } from "@phosphor-icons/react/dist/icons/Play";
+
 export function RibbonDJ() {
     const projectName = useProjectStore((state) => state.project.name);
     const { openAudio, closeAudio, play, pause, fileOpen, playing, getCurrentTime } = usePlayback();
@@ -24,13 +28,13 @@ export function RibbonDJ() {
 
     return fileOpen ?
         (
-                <div className="flex flex-col flex-1  px-3 border-l-2 border-stone-200">
+                <div className="select-none flex flex-col flex-1  px-3 border-l-2 border-border-weak">
                     <div className="select-none flex-1 flex gap-3 items-center">
-                        <div className="flex-init hover:bg-stone-100 p-1 text-xl" onClick={() => {playing ? pause() : play();}}>
-                            {playing ? "⏸️" : "▶️"}</div>
+                        <div className="flex-init p-1" onClick={() => {playing ? pause() : play();}}>
+                            {playing ? <ClickableIcon Icon={PauseIcon} size={24} /> : <ClickableIcon Icon={PlayIcon} size={24} />}</div>
                         
                         <SeekBar />
-                        <div className="flex-init hover:bg-stone-100 p-1" onClick={closeAudio}>unopen song</div>
+                        <div className="flex-init hover:bg-highlight p-1" onClick={closeAudio}>unopen song</div>
                     </div>
                     <span ref={timeelapsedRef}>aaaa</span>
                 </div>
@@ -38,7 +42,7 @@ export function RibbonDJ() {
         :
         (
             <div 
-                className="flex-1 bg-stone-100 hover:bg-stone-200 px-10 place-content-center"
+                className="flex-1 bg-background hover:bg-highlight px-10 place-content-center"
                 onClick={openAudio}
             >upload "{projectName}" audio file</div>
         )

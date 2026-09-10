@@ -1,3 +1,5 @@
+export type RGB = {r: number, g: number, b: number}
+
 export function hsvToRgb(h: number, s: number, v: number) {
     let r = 0, g = 0, b = 0, i, f, p, q, t;
 
@@ -21,9 +23,23 @@ export function hsvToRgb(h: number, s: number, v: number) {
     };
 }
 
-export function colorToHexCode(color: {r: number, g: number, b: number}): string {
-    const r = color.r.toString(16).padStart(2);
-    const g = color.g.toString(16).padStart(2);
-    const b = color.b.toString(16).padStart(2);
-    return `#${r}${g}${b}`;
+export function colorToHexCode({r, g, b}: RGB): string {
+    const hr = r.toString(16).padStart(2, '0');
+    const hg = g.toString(16).padStart(2, '0');
+    const hb = b.toString(16).padStart(2, '0');
+    return `#${hr}${hg}${hb}`;
+}
+
+export function hexCodeToColor(hex: string) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return {r, g, b};
+}
+
+export function contrastWithBackground({r, g, b}: RGB) {
+    if ((r*299 + g*587 + b*114) / 1000 < 150)
+        return {r: 0xe4, g: 0xe4, b: 0xe7};
+    else
+        return {r: 0x00, g: 0x00, b: 0x00};
 }

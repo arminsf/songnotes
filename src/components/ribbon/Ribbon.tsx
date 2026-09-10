@@ -1,6 +1,7 @@
 import { downloadProject } from "../../file/io";
 import { useEditorStore } from "../../store/editor-store";
 import { useProjectStore } from "../../store/project-store"
+import { ThemeButton } from "../ThemeButton";
 import { RibbonDJ } from "./RibbonDJ";
 import { Tapper } from "./Tapper";
 
@@ -12,7 +13,7 @@ export function Ribbon() {
     const setProjectSettingsOpen = useEditorStore((state) => state.setProjectSettingsOpen);
 
     return (
-        <div className="flex flex-row gap-3 border-b-2 border-stone-400">
+        <div className="flex flex-row gap-3 border-b-2 border-border-weak">
             <div className="flex-init flex flex-col items-start p-3">
                 <h1 
                     className="text-2xl h-8 size-init font-bold hover:underline cursor-pointer"
@@ -21,12 +22,12 @@ export function Ribbon() {
 
                 <div className="flex flex-row gap-5">
                     <div
-                        className="text-sky-600 font-mono text-md hover:underline cursor-pointer" 
+                        className="text-hyperlink font-mono text-md hover:underline cursor-pointer" 
                         onClick={() => downloadProject(project)}
                     >save</div>
 
                     <div
-                        className="text-sky-600 font-mono text-md hover:underline cursor-pointer" 
+                        className="text-hyperlink font-mono text-md hover:underline cursor-pointer" 
                         onClick={() => setEditorOpen(false)}
                     >close</div>
                 </div>
@@ -36,7 +37,7 @@ export function Ribbon() {
                 <div className="font-mono p-2 flex flex-row items-start gap-2">
                     <p>BPM:</p>
                     <input 
-                        className="w-13 border border-stone-300" 
+                        className="w-13 border border-border-weak" 
                         type="number"
                         value={project.bpm}
                         onChange={(e) => editProject({bpm: Number(e.target.value)})}
@@ -46,6 +47,7 @@ export function Ribbon() {
                 <Tapper />
             </div>
             <RibbonDJ />
+            <ThemeButton />
         </div>
     )
 }

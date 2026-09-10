@@ -46,9 +46,9 @@ export function SeekBar() {
             }
         }}
     >
-        <div className="flex-1 bg-stone-300 h-1" ref={fullbarRef}>
-            <div className="relative bg-stone-500 h-full" ref={barRef}>
-                <div className="absolute size-3 bg-stone-500 rounded-full -right-1 -top-1"></div>
+        <div className="flex-1 bg-border-weak h-1" ref={fullbarRef}>
+            <div className="relative bg-border-strong h-full" ref={barRef}>
+                <div className="absolute size-3 bg-border-strong rounded-full -right-1 -top-1"></div>
             </div>
         </div>
     </div>

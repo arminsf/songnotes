@@ -113,7 +113,7 @@ export const useProjectStore = create<ProjectStore>((set) => ({
                             id: newPatternId,
                             name: `New Pattern ${newPatternId}`,
                             label: `NP${newPatternId}`,
-                            color: colorToHexCode(hsvToRgb(Math.random()*10, 0.2, 1)),
+                            color: hsvToRgb(Math.random()*10, 0.2+Math.random()*0.6, 1),
                             notes: "",
                         }
                     ],

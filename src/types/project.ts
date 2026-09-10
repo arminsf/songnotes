@@ -1,10 +1,11 @@
 import type { AbsChord, Note } from "../musictheory/notes";
+import type { RGB } from "../utils";
 
 export interface Pattern {
     id: number,
     name: string,
     label: string,
-    color: string,
+    color: RGB,
     chord?: AbsChord,
     notes: string,
 }

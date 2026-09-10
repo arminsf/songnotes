@@ -4,7 +4,7 @@ import { useProjectStore } from "./store/project-store";
 
 function WelcomePageButton({onClick, label}: {onClick: () => void, label: string}) {
     return (<div 
-                className="hover:bg-stone-100 -my-1 py-1 -mx-5 px-5"
+                className="hover:bg-highlight -my-1 py-1 -mx-5 px-5"
                 onClick={onClick}
             >{label}</div>);
 }
@@ -19,8 +19,8 @@ export function Welcome() {
     const setEditorOpen = useEditorStore((state) => state.setEditorOpen);
 
     return (
-        <div className="grid size-full items-center justify-items-center">
-            <div className="border-2 border-stone-200 flex flex-col gap-8 p-5 w-100 ">
+        <div className="grid bg-background size-full items-center justify-items-center text-text">
+            <div className="border-2 border-border-weak flex flex-col gap-8 p-5 w-100 ">
                 <h1 className="text-3xl">Songnotes</h1>
                 <div className="flex flex-col gap-2">
                     { projectOpened && <WelcomePageButton onClick={() => {setEditorOpen(true);}} label={`Back to ${projectName}`} /> }
@@ -36,8 +36,7 @@ export function Welcome() {
                         label="New song"
                     />
 
-                    <div 
-                        className="hover:bg-stone-100 -my-1 py-1 -mx-5 px-5"
+                    <WelcomePageButton
                         onClick={() => {
                             if (projectOpened) alert("the app should ask you if you want to discard your work right now.")
 
@@ -48,9 +47,10 @@ export function Welcome() {
                                 setEditorOpen(true);})
                             .catch(alert);
                         }}
-                    >Open song</div>
+                        label="Open song"
+                    />
 
-                    <h3 className="font-mono border-b text-stone-500">Examples</h3>
+                    <h3 className="font-mono border-b text-mute">Examples</h3>
 
                     <WelcomePageButton 
                         onClick={() => {
