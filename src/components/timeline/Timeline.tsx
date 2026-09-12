@@ -1,3 +1,4 @@
+import { useEditorStore } from "../../store/editor-store";
 import { useProjectStore } from "../../store/project-store";
 import { InlineBar } from "./InlineBar";
 import { MeasureRow } from "./MeasureRow";
@@ -5,6 +6,9 @@ import { PauseBar } from "./PauseBar";
 import { SectionBar } from "./SectionBar";
 
 export function Timeline() {
+  const timelineLabelMode = useEditorStore((state) => state.timelineLabelMode);
+  const setTimelineLabelMode = useEditorStore((state) => state.setTimelineLabelMode);
+
   const width = useProjectStore((state) => state.project.phraseLength);
   const newMeasure = useProjectStore((state) => state.newMeasure);
   const timeline = useProjectStore((state) => state.project.timeline);
@@ -70,25 +74,62 @@ export function Timeline() {
   }
 
   return (
-    <div className="flex flex-col gap-3">
-      {[...constructTimeline()]}
-
-      <div className="flex flex-row gap-3">
-        <div
-          className="border-2 border-border-strong hover:bg-highlight w-full h-10 place-content-center text-center text-mute"
-          onClick={newMeasure}
+    <div className="flex flex-col">
+      <div className="flex gap-1 p-1">
+        <button
+          className="font-mono border flex-1 px-4 hover:bg-highlight active:bg-pressed rounded-l-full"
+          onClick={() => setTimelineLabelMode("label")}
+          style={timelineLabelMode === "label" ? {
+                  backgroundColor: "var(--color-text)",
+                  color: "var(--color-background)",
+                } : {}}
         >
-          add 1 measure
-        </div>
+          Label
+        </button>
 
-        <div
-          className="border-2 border-border-strong hover:bg-highlight w-full h-10 place-content-center text-center text-mute"
-          onClick={() => {
-            for (let i = 0; i < width; i++)
-              newMeasure()
-          }}
+        <button
+          className="font-mono border flex-1 px-4 hover:bg-highlight active:bg-pressed"
+          onClick={() => setTimelineLabelMode("absChord")}
+          style={timelineLabelMode === "absChord" ? {
+                  backgroundColor: "var(--color-text)",
+                  color: "var(--color-background)",
+                } : {}}
         >
-          add {width} measures
+          Letters
+        </button>
+
+        <button
+          className="font-mono border flex-1 px-4 hover:bg-highlight active:bg-pressed rounded-r-full"
+          onClick={() => setTimelineLabelMode("relChord")}
+          style={timelineLabelMode === "relChord" ? {
+                  backgroundColor: "var(--color-text)",
+                  color: "var(--color-background)",
+                } : {}}
+        >
+          Roman
+        </button>
+      </div>
+
+      <div className="flex flex-col p-3 gap-3">
+        {[...constructTimeline()]}
+
+        <div className="flex flex-row gap-3">
+          <div
+            className="border-2 border-border-strong hover:bg-highlight w-full h-10 place-content-center text-center text-mute"
+            onClick={newMeasure}
+          >
+            add 1 measure
+          </div>
+
+          <div
+            className="border-2 border-border-strong hover:bg-highlight w-full h-10 place-content-center text-center text-mute"
+            onClick={() => {
+              for (let i = 0; i < width; i++)
+                newMeasure()
+            }}
+          >
+            add {width} measures
+          </div>
         </div>
       </div>
     </div>

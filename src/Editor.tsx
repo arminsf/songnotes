@@ -9,7 +9,7 @@ export function Editor() {
     <div className="flex flex-col size-full">
       <Ribbon />
       <Group>
-        <Panel className="p-3" defaultSize={350} minSize={350}>
+        <Panel defaultSize={350} minSize={350}>
           <Timeline />
         </Panel>
         <Separator className="border border-border-weak" />
