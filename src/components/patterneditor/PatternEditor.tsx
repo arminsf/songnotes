@@ -48,7 +48,7 @@ export function PatternEditor() {
       <div className="flex gap-2 items-center flex-wrap">
         <span>Label: </span>
         <input
-          className="border w-15 p-1"
+          className="border border-border-weak w-15 p-1"
           type="text"
           value={pattern.label}
           onChange={(e) => editPattern(pattern.id, { label: e.target.value })}
@@ -84,7 +84,7 @@ export function PatternEditor() {
             {!usingRelative ? (
               <>
                 <select
-                  className="border"
+                  className="border border-border-weak"
                   value={noteName(pattern.chord.root)}
                   onChange={(e) =>
                     editPattern(
@@ -119,7 +119,7 @@ export function PatternEditor() {
                 </select>
 
                 <input
-                  className="border w-15"
+                  className="border border-border-weak w-15"
                   list="chordtypes"
                   type="text"
                   value={pattern.chord.quality}
@@ -152,7 +152,7 @@ export function PatternEditor() {
             {usingRelative ? (
               <>
                 <select
-                  className="border"
+                  className="border border-border-weak"
                   value={relChordNameRootOnly(
                     chordRelative(pattern.chord, key),
                   )}
@@ -193,7 +193,7 @@ export function PatternEditor() {
                 </select>
 
                 <input
-                  className="border w-15"
+                  className="border border-border-weak w-15"
                   list="chordtypes"
                   type="text"
                   value={pattern.chord.quality}
@@ -236,7 +236,7 @@ export function PatternEditor() {
         )}
       </div>
       <textarea
-        className="border resize-none w-full h-full p-2"
+        className="border border-border-strong resize-none w-full h-full p-2"
         value={pattern.notes}
         onChange={(e) => editPattern(pattern.id, { notes: e.target.value })}
       />
