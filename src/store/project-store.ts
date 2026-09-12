@@ -1,10 +1,9 @@
 import { parseNote } from "../musictheory/notes.ts";
+import { rankMeasure } from "../project/timeline.ts";
 import type { Pattern, Project } from "../types/project";
 
 import { hsvToRgb } from "../utils.ts";
 import { create } from "zustand";
-
-// import { produce } from "immer";
 
 const initialProject: Project = {
   name: "Untitled",
@@ -130,8 +129,8 @@ export const useProjectStore = create<ProjectStore>((set) => ({
             ...state.project.patterns,
             {
               id: newPatternId,
-              name: `New Pattern ${newPatternId}`,
-              label: `NP${newPatternId}`,
+              name: clickedMeasureIndex !== null ? `Measure ${1 + (rankMeasure(state.project.timeline, clickedMeasureIndex) || 0)}` : `Note ${newPatternId}`,
+              label: clickedMeasureIndex !== null ? `M${1 + (rankMeasure(state.project.timeline, clickedMeasureIndex) || 0)}` : `N${newPatternId}`,
               color: hsvToRgb(Math.random() * 10, 0.2 + Math.random() * 0.6, 1),
               notes: "",
             },
