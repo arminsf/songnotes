@@ -26,7 +26,7 @@ export function Welcome() {
   const setEditorOpen = useEditorStore((state) => state.setEditorOpen);
 
   return (
-    <div className="grid bg-background size-full items-center justify-items-center text-text">
+    <div className="grid size-full items-center justify-items-center text-text">
       <div className="border-2 border-border-weak flex flex-col gap-8 p-5 w-100 ">
         <h1 className="text-3xl">Songnotes</h1>
         <div className="flex flex-col gap-2">
@@ -73,6 +73,7 @@ export function Welcome() {
 
           <h3 className="font-mono border-b text-mute">Examples</h3>
         </div>
+        <span className="text-s font-mono">Icons from <a className="text-hyperlink" href="https://phosphoricons.com/">Phosphor</a></span>
       </div>
     </div>
   );
