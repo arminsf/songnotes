@@ -73,11 +73,23 @@ export function Timeline() {
     <div className="flex flex-col gap-3">
       {[...constructTimeline()]}
 
-      <div
-        className="border-2 border-border-strong hover:bg-highlight w-full h-10 place-content-center text-center text-mute"
-        onClick={() => [0, 0, 0, 0].map(newMeasure)}
-      >
-        add 4 measures
+      <div className="flex flex-row gap-3">
+        <div
+          className="border-2 border-border-strong hover:bg-highlight w-full h-10 place-content-center text-center text-mute"
+          onClick={newMeasure}
+        >
+          add 1 measure
+        </div>
+
+        <div
+          className="border-2 border-border-strong hover:bg-highlight w-full h-10 place-content-center text-center text-mute"
+          onClick={() => {
+            for (let i = 0; i < width; i++)
+              newMeasure()
+          }}
+        >
+          add {width} measures
+        </div>
       </div>
     </div>
   );
