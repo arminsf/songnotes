@@ -36,14 +36,15 @@ export function PatternEditor() {
   return pattern ? (
     <div className="relative flex flex-col gap-1 w-full h-full p-3">
       <div className="select-none absolute top-4 right-4 flex flex-col gap-3">
-        <div
-          onClick={() => selectPattern(null)}
-        >
+        <div onClick={() => selectPattern(null)}>
           <ClickableIcon Icon={XCircleIcon} size={24} />
         </div>
 
         <div
-          onClick={() => {selectPattern(null); deletePattern(pattern.id);}}
+          onClick={() => {
+            selectPattern(null);
+            deletePattern(pattern.id);
+          }}
         >
           <ClickableIcon Icon={TrashIcon} size={24} color="red" />
         </div>

@@ -130,8 +130,14 @@ export const useProjectStore = create<ProjectStore>((set) => ({
             ...state.project.patterns,
             {
               id: newPatternId,
-              name: clickedMeasureIndex !== null ? `Measure ${1 + (rankMeasure(state.project.timeline, clickedMeasureIndex) || 0)}` : `Note ${newPatternId}`,
-              label: clickedMeasureIndex !== null ? `M${1 + (rankMeasure(state.project.timeline, clickedMeasureIndex) || 0)}` : `N${newPatternId}`,
+              name:
+                clickedMeasureIndex !== null
+                  ? `Measure ${1 + (rankMeasure(state.project.timeline, clickedMeasureIndex) || 0)}`
+                  : `Note ${newPatternId}`,
+              label:
+                clickedMeasureIndex !== null
+                  ? `M${1 + (rankMeasure(state.project.timeline, clickedMeasureIndex) || 0)}`
+                  : `N${newPatternId}`,
               color: hsvToRgb(Math.random() * 10, 0.2 + Math.random() * 0.6, 1),
               notes: "",
             },
@@ -147,13 +153,18 @@ export const useProjectStore = create<ProjectStore>((set) => ({
     return r;
   },
 
-  deletePattern: (patternId: number) => set((state) => ({
-    project: {
-      ...state.project,
-      timeline: state.project.timeline.map((m) => (m.type === "measure" && m.pattern === patternId) ? {...m, pattern: null} : m),
-      patterns: state.project.patterns.filter((p) => p.id !== patternId)
-    }
-  })),
+  deletePattern: (patternId: number) =>
+    set((state) => ({
+      project: {
+        ...state.project,
+        timeline: state.project.timeline.map((m) =>
+          m.type === "measure" && m.pattern === patternId
+            ? { ...m, pattern: null }
+            : m,
+        ),
+        patterns: state.project.patterns.filter((p) => p.id !== patternId),
+      },
+    })),
 
   newMeasure: () =>
     set((state) => ({

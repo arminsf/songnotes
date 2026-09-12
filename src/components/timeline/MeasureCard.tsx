@@ -8,7 +8,11 @@ import {
 import { useEffect, useRef } from "react";
 import { usePlayback } from "../../playback/usePlayback";
 import { colorToHexCode, contrastWithBackground } from "../../utils";
-import { absChordName, chordRelative, relChordName } from "../../musictheory/notes";
+import {
+  absChordName,
+  chordRelative,
+  relChordName,
+} from "../../musictheory/notes";
 
 export function MeasureCard({ index }: { index: number }) {
   const project = useProjectStore((state) => state.project);
@@ -105,10 +109,11 @@ export function MeasureCard({ index }: { index: number }) {
                 return pattern ? selectPattern(pattern.id) : null;
               }}
             >
-              {
-                pattern.chord === undefined || timelineLabelMode === "label" ? pattern.label : 
-                timelineLabelMode === "absChord" ? absChordName(pattern.chord) : relChordName(chordRelative(pattern.chord, project.key))
-              }
+              {pattern.chord === undefined || timelineLabelMode === "label"
+                ? pattern.label
+                : timelineLabelMode === "absChord"
+                  ? absChordName(pattern.chord)
+                  : relChordName(chordRelative(pattern.chord, project.key))}
             </div>
             <div
               className="z-10 hover:bg-[#00000025] w-4 flex-initial border-l-2 border-dotted place-content-center"

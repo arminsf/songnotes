@@ -7,7 +7,9 @@ import { SectionBar } from "./SectionBar";
 
 export function Timeline() {
   const timelineLabelMode = useEditorStore((state) => state.timelineLabelMode);
-  const setTimelineLabelMode = useEditorStore((state) => state.setTimelineLabelMode);
+  const setTimelineLabelMode = useEditorStore(
+    (state) => state.setTimelineLabelMode,
+  );
 
   const width = useProjectStore((state) => state.project.phraseLength);
   const newMeasure = useProjectStore((state) => state.newMeasure);
@@ -79,10 +81,14 @@ export function Timeline() {
         <button
           className="font-mono border flex-1 px-4 hover:bg-highlight active:bg-pressed rounded-l-full"
           onClick={() => setTimelineLabelMode("label")}
-          style={timelineLabelMode === "label" ? {
+          style={
+            timelineLabelMode === "label"
+              ? {
                   backgroundColor: "var(--color-text)",
                   color: "var(--color-background)",
-                } : {}}
+                }
+              : {}
+          }
         >
           Label
         </button>
@@ -90,10 +96,14 @@ export function Timeline() {
         <button
           className="font-mono border flex-1 px-4 hover:bg-highlight active:bg-pressed"
           onClick={() => setTimelineLabelMode("absChord")}
-          style={timelineLabelMode === "absChord" ? {
+          style={
+            timelineLabelMode === "absChord"
+              ? {
                   backgroundColor: "var(--color-text)",
                   color: "var(--color-background)",
-                } : {}}
+                }
+              : {}
+          }
         >
           Letters
         </button>
@@ -101,10 +111,14 @@ export function Timeline() {
         <button
           className="font-mono border flex-1 px-4 hover:bg-highlight active:bg-pressed rounded-r-full"
           onClick={() => setTimelineLabelMode("relChord")}
-          style={timelineLabelMode === "relChord" ? {
+          style={
+            timelineLabelMode === "relChord"
+              ? {
                   backgroundColor: "var(--color-text)",
                   color: "var(--color-background)",
-                } : {}}
+                }
+              : {}
+          }
         >
           Roman
         </button>
@@ -124,8 +138,7 @@ export function Timeline() {
           <div
             className="border-2 border-border-strong hover:bg-highlight w-full h-10 place-content-center text-center text-mute"
             onClick={() => {
-              for (let i = 0; i < width; i++)
-                newMeasure()
+              for (let i = 0; i < width; i++) newMeasure();
             }}
           >
             add {width} measures

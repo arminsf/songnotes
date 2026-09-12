@@ -6,7 +6,7 @@
   --font-mono: monospace;
 
   --color-background: var(--color-white);
-  --color-text: var(--color-black);
+  --color-text: var(--color-zinc-800);
   --color-mute: var(--color-gray-500);
   --color-highlight: var(--color-gray-200);
   --color-pressed: var(--color-gray-300);
