@@ -31,6 +31,7 @@ interface ProjectStore {
   shiftInTimeline: (index: number, offset: number) => void;
   removeFromTimeline: (index: number) => void;
   newPattern: (clickedMeasureIndex: number | null) => number | null;
+  deletePattern: (patternId: number) => void;
   newMeasure: () => void;
   setMeasurePattern: (measureIndex: number, patternId: number | null) => void;
   newSection: (at: number) => void;
@@ -145,6 +146,14 @@ export const useProjectStore = create<ProjectStore>((set) => ({
 
     return r;
   },
+
+  deletePattern: (patternId: number) => set((state) => ({
+    project: {
+      ...state.project,
+      timeline: state.project.timeline.map((m) => (m.type === "measure" && m.pattern === patternId) ? {...m, pattern: null} : m),
+      patterns: state.project.patterns.filter((p) => p.id !== patternId)
+    }
+  })),
 
   newMeasure: () =>
     set((state) => ({

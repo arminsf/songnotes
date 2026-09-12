@@ -16,6 +16,9 @@ import { useEditorStore } from "../../store/editor-store";
 import { useProjectStore } from "../../store/project-store";
 import { PatternList } from "./PatternList";
 import { colorToHexCode, hexCodeToColor } from "../../utils";
+import { XCircleIcon } from "@phosphor-icons/react/dist/icons/XCircle";
+import { TrashIcon } from "@phosphor-icons/react/dist/icons/Trash";
+import { ClickableIcon } from "../ClickableIcon";
 
 export function PatternEditor() {
   const [usingRelative, setUsingRelative] = useState(false);
@@ -28,14 +31,22 @@ export function PatternEditor() {
     state.project.patterns.find((p) => p.id === selectedPatternId),
   );
   const editPattern = useProjectStore((state) => state.editPattern);
+  const deletePattern = useProjectStore((state) => state.deletePattern);
 
   return pattern ? (
     <div className="relative flex flex-col gap-1 w-full h-full p-3">
-      <div
-        className="select-none absolute size-6 hover:bg-highlight top-4 right-4 text-center place-content-center"
-        onClick={() => selectPattern(null)}
-      >
-        ×
+      <div className="select-none absolute top-4 right-4 flex flex-col gap-3">
+        <div
+          onClick={() => selectPattern(null)}
+        >
+          <ClickableIcon Icon={XCircleIcon} size={24} />
+        </div>
+
+        <div
+          onClick={() => {selectPattern(null); deletePattern(pattern.id);}}
+        >
+          <ClickableIcon Icon={TrashIcon} size={24} color="red" />
+        </div>
       </div>
 
       <input
