@@ -41,6 +41,7 @@ export function MeasureCard({ index }: { index: number }) {
     (state) => state.selectedPatternId,
   );
   const hoveredPatternId = useEditorStore((state) => state.hoveredPatternId);
+  const hoverPattern = useEditorStore((state) => state.hoverPattern);
 
   const timelineLabelMode = useEditorStore((state) => state.timelineLabelMode);
 
@@ -91,6 +92,7 @@ export function MeasureCard({ index }: { index: number }) {
         backgroundColor: pattern && colorToHexCode(pattern.color),
         color: pattern && colorToHexCode(contrastWithBackground(pattern.color)),
       }}
+      onPointerEnter={() => hoverPattern(patternId)}
     >
       <div
         className={
