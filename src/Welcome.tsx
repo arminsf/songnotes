@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { uploadProject } from "./file/io";
+import { fetchProject, uploadProject } from "./file/io";
 import { useEditorStore } from "./store/editor-store";
 import { useProjectStore } from "./store/project-store";
 import { ThemeButton } from "./components/ThemeButton";
@@ -123,6 +123,19 @@ export function Welcome() {
           />
 
           <h3 className="font-mono border-b text-mute">Examples</h3>
+
+          <WelcomePageButton
+            action={() => {
+              fetchProject("/songnotes/Lagtrain (WIP).json").then((project) => {
+                loadProject(project);
+                setProjectOpened(true);
+                setEditorOpen(true);
+              });
+            }}
+            label="Lagtrain (WIP)"
+            askConfirm={projectOpened}
+            confirmMessage="Discard changes?"
+          />
         </div>
         <span className="text-s font-mono">
           Icons from{" "}
@@ -137,17 +150,6 @@ export function Welcome() {
 
 /*
 
-<WelcomePageButton
-            onClick={() => {
-              fetchProject("/songnotes/Song.json").then((project) => {
-                loadProject(project);
-                setProjectOpened(true);
-                setEditorOpen(true);
-              });
-            }}
-            label="Song"
-            askConfirm={projectOpened}
-            confirmMessage="Discard changes?"
-          />
+
 
 */
