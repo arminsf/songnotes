@@ -76,7 +76,7 @@ export function Timeline() {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-full">
       <div className="flex gap-1 p-1">
         <button
           className="font-mono border flex-1 px-4 hover:bg-highlight active:bg-pressed rounded-l-full"
@@ -124,7 +124,7 @@ export function Timeline() {
         </button>
       </div>
 
-      <div className="flex flex-col p-3 gap-3">
+      <div className="flex flex-col overflow-y-auto p-3 gap-3">
         {[...constructTimeline()]}
 
         <div className="flex flex-row gap-3">
