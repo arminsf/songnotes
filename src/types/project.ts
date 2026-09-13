@@ -6,7 +6,7 @@ export interface Pattern {
   name: string;
   label: string;
   color: RGB;
-  chord?: AbsChord;
+  chords: AbsChord[];
   notes: string;
 }
 

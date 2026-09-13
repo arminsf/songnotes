@@ -109,11 +109,11 @@ export function MeasureCard({ index }: { index: number }) {
                 return pattern ? selectPattern(pattern.id) : null;
               }}
             >
-              {pattern.chord === undefined || timelineLabelMode === "label"
+              {!pattern.chords || timelineLabelMode === "label"
                 ? pattern.label
                 : timelineLabelMode === "absChord"
-                  ? absChordName(pattern.chord)
-                  : relChordName(chordRelative(pattern.chord, project.key))}
+                  ? pattern.chords.map((c) => absChordName(c)).join(" - ")
+                  : pattern.chords.map((c) => relChordName(chordRelative(c, project.key))).join(" - ")}
             </div>
             <div
               className="z-10 hover:bg-[#00000025] w-4 flex-initial border-l-2 border-dotted place-content-center"

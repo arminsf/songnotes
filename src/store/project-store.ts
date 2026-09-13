@@ -139,6 +139,7 @@ export const useProjectStore = create<ProjectStore>((set) => ({
                   ? `M${1 + (rankMeasure(state.project.timeline, clickedMeasureIndex) || 0)}`
                   : `N${newPatternId}`,
               color: hsvToRgb(Math.random() * 10, 0.2 + Math.random() * 0.6, 1),
+              chords: [],
               notes: "",
             },
           ],
