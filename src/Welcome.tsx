@@ -126,7 +126,7 @@ export function Welcome() {
 
           <WelcomePageButton
             action={() => {
-              fetchProject("/songnotes/Lagtrain (WIP).json").then((project) => {
+              fetchProject("/songnotes/examples/Lagtrain (WIP).json").then((project) => {
                 loadProject(project);
                 setProjectOpened(true);
                 setEditorOpen(true);
